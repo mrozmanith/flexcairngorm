@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
+<meta content="Command,com.universalmind.cairngorm.commands.Command,execute,dispatchEvent,notifyCaller,cacheCaller,result,fault,onFault,buildTokenOptions,getTokenOption" name="keywords">
+<title>com.universalmind.cairngorm.commands.Command</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'Command - Universal Mind Cairngorm 2.2.1';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">UM_Cairngorm 2.2.1</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?com/universalmind/cairngorm/commands/Command.html&amp;com/universalmind/cairngorm/commands/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;Command</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class Command"); titleBar_setSubNav(false,false,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.universalmind.cairngorm.commands</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class Command</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implements</td><td>com.adobe.cairngorm.commands.ICommand, mx.rpc.IResponder</td>
+</tr>
+</table>
+<p></p>
+    A base class used by developers to (a) allow a single command class to manage multiple events, 
+    (b) provide easy notifications to callers, (c) allows commands to dispatch business events,
+    and (d) allows data to be easily cached for calls to delegates or remote services. 
+    
+    Using the Callbacks class, ANY caller can serve as an Responder without implementing 
+    the IResponder interface(s). Using the UMEvent class, any such event recieved at the 
+    Command instance can contain optional information that will be used later for caller notifications.
+        <p></p>
+<br>
+<span class="label">Example</span>
+<br>This example demonstrates how the Command class can be subclass and used properly.
+    
+    <div class='listing'><pre>
+       public class LoginCommand extends Command {
+    
+          override public function execute(event:CairngormEvent):void {
+              // always call the super.execute() method which allows the 
+              // callBack information to be cached.
+    
+              super.execute(event);
+    
+              switch(event.type) {
+                   case LoginUserEvent.EVENT_ID  :  doLogin(event as LoginUserEvent);  break;
+                   case LogoutUserEvent.EVENT_ID :  doLogout(event as LogoutUserEvent); break;
+              }
+          }
+    
+          private function doLogin(event:LoginUserEvent)  :void {  
+                var handlers : Callbacks     = new Callbacks(onResults_doLogin,onFault);
+                var delegate : LoginDelegate = new LoginDelegate(handlers);
+    
+       delegate.login(event.userID,event.password);
+       }
+          private function doLogout(event:LogoutUserEvent):void { ; }
+    
+          //           // DataService Result Handlers
+          //     
+          private function onResults_doLogin(event::void {
+                __model.user = (event.result as UserVO);
+          }
+    
+          private var __model : ModelLocator = ModelLocator.getInstance();
+       }
+    </pre></div>
+    
+    <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../events/Callbacks.html" target="">com.universalmind.cairngorm.events.Callbacks</a>
+<br>
+<a href="../events/UMEvent.html" target="">com.universalmind.cairngorm.events.UMEvent</a>
+</div>
+<br>
+<hr>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dispatchEvent()">dispatchEvent</a>(event:<a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a>):void</div>
+<div class="summaryTableDescription">
+     This method allows commands to dispatch business events.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#execute()">execute</a>(event:<a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a>):void</div>
+<div class="summaryTableDescription"> 
+       This function allows the incoming event to "cache" optional caller notification details.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#fault()">fault</a>(info:Object):void</div>
+<div class="summaryTableDescription">
+        Method required to allow Commands to support the "fault" response for the IResponder interfaces.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#notifyCaller()">notifyCaller</a>(results:* = null):void</div>
+<div class="summaryTableDescription"> 
+       This method allows callers (if originally packaged with the incoming event) to be receive a notification of response.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onFault()">onFault</a>(info:Object):void</div>
+<div class="summaryTableDescription">
+       Utility method to allow command subclasses to use a shared method for "fault" respones.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#result()">result</a>(info:Object):void</div>
+<div class="summaryTableDescription">
+        Method required to allow Commands to support the "result" response for the IResponder interfaces.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#buildTokenOptions()">buildTokenOptions</a>(details:*):TokenOptions</div>
+<div class="summaryTableDescription">
+   Method to allow commands to gather information for caching during asynchronous calls.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#cacheCaller()">cacheCaller</a>(event:Event):void</div>
+<div class="summaryTableDescription"> 
+       This method caches optional callers response handlers so callers can later receive a notification of response.</div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getTokenOption()">getTokenOption</a>(event:Event, key:String):*</div>
+<div class="summaryTableDescription">
+    This utility method provides an easy lookup of an token-cached value; to be retrieved by key/name
+    
+    </div>
+</td><td class="summaryTableOwnerCol">Command</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="buildTokenOptions()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">buildTokenOptions</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function buildTokenOptions(details:*):TokenOptions</code><p>
+   Method to allow commands to gather information for caching during asynchronous calls.
+   After the asynchronous RDS is dispatched, this preserves all information for access by 
+   the result/fault handlers... if needed.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">details</span>:*</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>TokenOptions</code></td>
+</tr>
+</table>
+</div>
+<a name="cacheCaller()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">cacheCaller</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function cacheCaller(event:Event):void</code><p> 
+       This method caches optional callers response handlers so callers can later receive a notification of response.
+       
+       </p><p>
+       Normally this method is called by Command subclasses calling super.execute(). 
+       However, manual invocation of this method is also supported.
+       </p>
+        
+       <span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code></td>
+</tr>
+</table>
+<br>
+<span class="label">Events</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><b>If</b></code> &mdash; event is an UMEvent subclass, then IResponder handlers [optional] are cached for future use.</td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../events/Callbacks.html" target="">com.universalmind.cairngorm.events.Callbacks</a>
+<br>
+<a href="../events/UMEvent.html" target="">com.universalmind.cairngorm.events.UMEvent</a>
+</div>
+</div>
+<a name="dispatchEvent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dispatchEvent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function dispatchEvent(event:<a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a>):void</code><p>
+     This method allows commands to dispatch business events. This functionality allows commands to 
+     to decoupled and provides better cohesion for inter-command activity.
+     
+     </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:<a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a></code></td>
+</tr>
+</table>
+<br>
+<span class="label">Events</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><b>This</b></code> &mdash; a new business event that should be dispatched; and may be handled by the same class
+     or by another completely separate command subclass instance.</td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">com.universalmind.cairngorm.FrontController</div>
+</div>
+<a name="execute()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">execute</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function execute(event:<a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a>):void</code><p> 
+       This function allows the incoming event to "cache" optional caller notification details.
+       Note: this method is overridden by the subclass; and should always be called by the subclass.
+       
+       </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:<a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a></code> &mdash; The event that was dispatched by a caller and recieved by an instance of the command subclass.
+       </td>
+</tr>
+</table>
+</div>
+<a name="fault()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fault</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function fault(info:Object):void</code><p>
+        Method required to allow Commands to support the "fault" response for the IResponder interfaces.
+        Support of the IResponder interface allows command instances to use either Callbacks as proxy Responders or the command instance itself to 
+        serve as the responder to a delegate or remote dataservice call.
+        
+        </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">info</span>:Object</code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">mx.rpc.IResponder</div>
+</div>
+<a name="getTokenOption()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getTokenOption</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function getTokenOption(event:Event, key:String):*</code><p>
+    This utility method provides an easy lookup of an token-cached value; to be retrieved by key/name
+    
+    </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">key</span>:String</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>*</code></td>
+</tr>
+</table>
+<br>
+<span class="label">Events</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><b>This</b></code> &mdash; the asynchronous response event (FaultEvent or ResultEvent) that may have TokenOptions cached.</td>
+</tr>
+</table>
+</div>
+<a name="notifyCaller()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">notifyCaller</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function notifyCaller(results:* = null):void</code><p> 
+       This method allows callers (if originally packaged with the incoming event) to be receive a notification of response.
+       
+       </p><p>
+       Conventional Cairngorm MVC solutions use the ModelLocator as a global repository and views {bind} to variables
+       exposed within the ModelLocator instance. Often, as enterprise needs scale the complexity of the applicaiton,
+       view instances need proprietary data that should not be shared nor contained within the ModelLocator. Direct "caller notification"
+       from command instances allow commands to deliver data [aka "notify"] to views or callers. The Callbacks class allows the
+       command to ignore any coupling issues regarding datatypes of the caller.
+       </p>
+        
+       <span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">results</span>:*</code> (default = <code>null</code>)<code></code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../events/Callbacks.html" target="">com.universalmind.cairngorm.events.Callbacks</a>
+</div>
+</div>
+<a name="onFault()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onFault</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onFault(info:Object):void</code><p>
+       Utility method to allow command subclasses to use a shared method for "fault" respones.
+       </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">info</span>:Object</code></td>
+</tr>
+</table>
+</div>
+<a name="result()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">result</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function result(info:Object):void</code><p>
+        Method required to allow Commands to support the "result" response for the IResponder interfaces.
+        Support of the IResponder interface allows command instances to use either Callbacks as proxy Responders or the command instance itself to 
+        serve as the responder to a delegate or remote dataservice call.
+        
+        </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">info</span>:Object</code></td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">mx.rpc.IResponder</div>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
+<meta content="UMEvent,com.universalmind.cairngorm.events.UMEvent,callbacks,clone,copyFrom,dispatch" name="keywords">
+<title>com.universalmind.cairngorm.events.UMEvent</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'UMEvent - Universal Mind Cairngorm 2.2.1';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">UM_Cairngorm 2.2.1</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?com/universalmind/cairngorm/events/UMEvent.html&amp;com/universalmind/cairngorm/events/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;UMEvent</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class UMEvent"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.universalmind.cairngorm.events</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class UMEvent</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">UMEvent <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.Event</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implements</td><td>com.universalmind.cairngorm.events.IUMEvent</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../events/AnnounceFaultEvent.html">AnnounceFaultEvent</a></td>
+</tr>
+</table>
+<p></p>
+    The UMEvent class is used to differentiate Cairngorm events 
+    from events raised by the underlying Flex framework (or even the standard CairngormEvent)
+    It is mandatory to use UMEvent for dispatching to Commands. Commands
+    understand and "use" the optional "handlers" responder within the event 
+    
+    <p>For more information on how event dispatching works in Cairngorm, 
+    please check with CairngormEventDispatcher.</p>
+        <p>For more information on how event dispatching works uniquely with Commands, 
+    please check with Command.</p>
+        <p>
+    Events are typically broadcast as the result of a user gesture occuring
+    in the application, such as a button click, a menu selection, a double
+    click, a drag and drop operation, etc.  
+    </p>
+        <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">com.universalmind.cairngorm.controller.CairngormEventDispatcher<br>
+<a href="../commands/Command.html" target="">com.universalmind.cairngorm.commands.Command</a>
+</div>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#callbacks">callbacks</a> : <a href="../events/Callbacks.html">Callbacks</a> = null<div class="summaryTableDescription">
+        The data property can be used to hold information to be passed with the event
+        in cases where the developer does not want to extend the UMEvent class.</div>
+</td><td class="summaryTableOwnerCol">UMEvent</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="../../../adobe/cairngorm/control/CairngormEvent.html#data">data</a> : *<div class="summaryTableDescription">
+       The data property can be used to hold information to be passed with the event
+       in cases where the developer does not want to extend the CairngormEvent class.</div>
+</td><td class="summaryTableOwnerCol"><a href="../../../adobe/cairngorm/control/CairngormEvent.html">CairngormEvent</a></td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#UMEvent()">UMEvent</a>(eventType:String = "com.universalmind.cairngorm.events.UMEvent", handlers:<a href="Callbacks.html">Callbacks</a> = null, bubbles:Boolean = true, cancelable:Boolean = false, data:* = null)</div>
+<div class="summaryTableDescription">
+        Constructor, takes the event name (type), Responder proxy to allow caller to be notified,
+        data object (defaults to null), and also defaults the standard Flex event properties bubbles and cancelable
+        to true and false respectively.</div>
+</td><td class="summaryTableOwnerCol">UMEvent</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#clone()">clone</a>():Event</div>
+<div class="summaryTableDescription">
+     Per Adobe Flex recommendations all events should support a clone() operation for bubbling and dispatching purposes
+     
+     </div>
+</td><td class="summaryTableOwnerCol">UMEvent</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#copyFrom()">copyFrom</a>(src:Event):Event</div>
+<div class="summaryTableDescription">
+     Utility method to allow quick initialization of an event based on current settings from another event.</div>
+</td><td class="summaryTableOwnerCol">UMEvent</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dispatch()">dispatch</a>():Boolean</div>
+<div class="summaryTableDescription">
+       <p><strong>Deprecated, Do not use! The default UMEvent bubbling and FrontController event hooks obviate this method.</strong></p>
+       This method also completely distorts the event structures within Flex...</div>
+</td><td class="summaryTableOwnerCol">UMEvent</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="callbacks"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">callbacks</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var callbacks:<a href="../events/Callbacks.html">Callbacks</a> = null</code><p>
+        The data property can be used to hold information to be passed with the event
+        in cases where the developer does not want to extend the UMEvent class.
+        However, it is recommended that specific classes are created for each type
+        of event to be dispatched.
+        </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="UMEvent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">UMEvent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function UMEvent(eventType:String = "com.universalmind.cairngorm.events.UMEvent", handlers:<a href="Callbacks.html">Callbacks</a> = null, bubbles:Boolean = true, cancelable:Boolean = false, data:* = null)</code><p>
+        Constructor, takes the event name (type), Responder proxy to allow caller to be notified,
+        data object (defaults to null), and also defaults the standard Flex event properties bubbles and cancelable
+        to true and false respectively.
+        
+        </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">eventType</span>:String</code> (default = "<code>com.universalmind.cairngorm.events.UMEvent</code>")<code></code> &mdash;  This is the signature or type of event
+        </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">handlers</span>:<a href="Callbacks.html">Callbacks</a></code> (default = <code>null</code>)<code></code> &mdash;   This is the "responder" proxy that allows notifications/callbacks to the original caller
+        </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">bubbles</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;    This flag indicates if the event should "bubble". [default = true]
+        </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">cancelable</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; This flag indicates if the event can be cancelled. [default = false]
+        </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">data</span>:*</code> (default = <code>null</code>)<code></code></td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="clone()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">clone</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function clone():Event</code><p>
+     Per Adobe Flex recommendations all events should support a clone() operation for bubbling and dispatching purposes
+     
+     </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Event</code></td>
+</tr>
+</table>
+</div>
+<a name="copyFrom()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">copyFrom</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function copyFrom(src:Event):Event</code><p>
+     Utility method to allow quick initialization of an event based on current settings from another event. 
+     Also used to implement the clone() method functionality
+     
+     </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">src</span>:Event</code> &mdash; The event from which current settings and references should be copied.
+     </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Event</code></td>
+</tr>
+</table>
+</div>
+<a name="dispatch()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dispatch</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function dispatch():Boolean</code><p>
+       </p><p><strong>Deprecated, Do not use! The default UMEvent bubbling and FrontController event hooks obviate this method.</strong></p>
+       This method also completely distorts the event structures within Flex... no other events in Flex can dispatch themselves.
+       Events are "announcements" with optional data packaged in the announcement. Events are passive. NOT active.
+        
+       Dispatch this event via the Cairngorm event dispatcher.
+       <p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code></td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
