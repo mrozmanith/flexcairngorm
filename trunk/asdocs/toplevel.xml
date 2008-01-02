@@ -1,0 +1,1735 @@
+<asdoc>
+
+<field name='SINGLETON_EXCEPTION' fullname='com.adobe.cairngorm:CairngormMessageCodes/SINGLETON_EXCEPTION' type='String' isStatic='true' isConst='true' defaultValue='C0001E' >
+</field>
+<field name='SERVICE_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/SERVICE_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0002E' >
+</field>
+<field name='COMMAND_ALREADY_REGISTERED' fullname='com.adobe.cairngorm:CairngormMessageCodes/COMMAND_ALREADY_REGISTERED' type='String' isStatic='true' isConst='true' defaultValue='C0003E' >
+</field>
+<field name='COMMAND_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/COMMAND_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0004E' >
+</field>
+<field name='VIEW_ALREADY_REGISTERED' fullname='com.adobe.cairngorm:CairngormMessageCodes/VIEW_ALREADY_REGISTERED' type='String' isStatic='true' isConst='true' defaultValue='C0005E' >
+</field>
+<field name='VIEW_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/VIEW_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0006E' >
+</field>
+<field name='REMOTE_OBJECT_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/REMOTE_OBJECT_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0007E' >
+</field>
+<field name='HTTP_SERVICE_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/HTTP_SERVICE_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0008E' >
+</field>
+<field name='WEB_SERVICE_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/WEB_SERVICE_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0009E' >
+</field>
+<field name='CONSUMER_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/CONSUMER_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0010E' >
+</field>
+<field name='PRODUCER_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/PRODUCER_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0012E' >
+</field>
+<field name='DATA_SERVICE_NOT_FOUND' fullname='com.adobe.cairngorm:CairngormMessageCodes/DATA_SERVICE_NOT_FOUND' type='String' isStatic='true' isConst='true' defaultValue='C0013E' >
+</field>
+<field name='ABSTRACT_METHOD_CALLED' fullname='com.adobe.cairngorm:CairngormMessageCodes/ABSTRACT_METHOD_CALLED' type='String' isStatic='true' isConst='true' defaultValue='C0014E' >
+</field>
+<field name='COMMAND_NOT_REGISTERED' fullname='com.adobe.cairngorm:CairngormMessageCodes/COMMAND_NOT_REGISTERED' type='String' isStatic='true' isConst='true' defaultValue='C0015E' >
+</field>
+<classRec name='CairngormMessageCodes' fullname='com.adobe.cairngorm:CairngormMessageCodes' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\CairngormMessageCodes.as' namespace='com.adobe.cairngorm' access='public' baseclass='Object' isFinal='false' isDynamic='false' ><description><![CDATA[
+  Stores Cairngorm message codes.
+  
+  <p>All messages/error codes must match the regular expression:
+    C\d{4}[EWI]
+    1. The application prefix e.g. 'C'.
+  
+  2. A four-digit error code that must be unique.
+  
+  3. A single character severity indicator
+     (E: error, W: warning, I: informational).</p>
+  ]]></description>
+</classRec>
+<field name='viewLocator' fullname='com.adobe.cairngorm.view:ViewLocator/private:viewLocator' type='com.adobe.cairngorm.view:ViewLocator' isStatic='true' isConst='false' >
+</field>
+<field name='viewHelpers' fullname='com.adobe.cairngorm.view:ViewLocator/private:viewHelpers' type='flash.utils:Dictionary' isStatic='false' isConst='false' >
+</field>
+<method name='getInstance' fullname='com.adobe.cairngorm.view:ViewLocator/getInstance' isStatic='true' isFinal='false' isOverride='false'  result_type='com.adobe.cairngorm.view:ViewLocator'><description><![CDATA[
+       Singleton access to the ViewLocator is assured through the static getInstance()
+       method, which is used to retrieve the only ViewLocator instance in a Cairngorm
+       application.
+              <p>Wherever there is a need to retreive the ViewLocator instance, it is achieved
+       using the following code:</p>
+              <pre>
+       var viewLocator:ViewLocator = ViewLocator.getInstance();
+       </pre>
+       ]]></description>
+</method>
+<method name='ViewLocator' fullname='com.adobe.cairngorm.view:ViewLocator/ViewLocator' isStatic='false' isFinal='false' isOverride='false'  result_type='*'><description><![CDATA[
+       The ViewLocator constructor should only be created
+       through the static singleton getInstance() method.  ViewLocator
+       maintains a hash map of ViewHelpers, keyed on viewName with a
+       particular view as the value stored in the hash map.
+       ]]></description>
+</method>
+<method name='register' fullname='com.adobe.cairngorm.view:ViewLocator/register' isStatic='false' isFinal='false' isOverride='false'  param_names='viewName;viewHelper' param_types='String;com.adobe.cairngorm.view:ViewHelper' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Registers a viewHelper under a canonical viewName.
+              <p>In order that the application developer need not know
+       the implementation of the view, a ViewHelper capable of manipulating
+       a given view is registered under a simple canonical name.</p>
+       <p>
+       For example, a LoginViewHelper may allow the manipulation of a
+       Login window, that may start life as a PopUpWindow, but later be
+       changed to a screen in a ViewStack.  By registering the LoginViewHelper
+       with the viewName "login", then any code that fetches the ViewHelper
+       by it's name "login", and then calls methods on the ViewHelper, is
+       completely insulated from any changes in the implementation of the
+       view, and the implementation of the ViewHelper.
+       </p>
+       <p>
+       If a view is already registered with the canonical name, and Error
+       is thrown.
+       </p>
+       ]]></description>
+<param><![CDATA[viewName A simple canonical name for the view that the ViewHelper
+       will manipulate, eg "login"
+       ]]></param>
+<param><![CDATA[viewHelper An instance of a ViewHelper
+       ]]></param>
+</method>
+<method name='unregister' fullname='com.adobe.cairngorm.view:ViewLocator/unregister' isStatic='false' isFinal='false' isOverride='false'  param_names='viewName' param_types='String' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Unregisters a viewHelper using its canonical name.
+              ]]></description>
+<param><![CDATA[viewName The canonical name for the view to be removed
+       ]]></param>
+</method>
+<method name='getViewHelper' fullname='com.adobe.cairngorm.view:ViewLocator/getViewHelper' isStatic='false' isFinal='false' isOverride='false'  param_names='viewName' param_types='String' param_defaults='undefined' result_type='com.adobe.cairngorm.view:ViewHelper'><description><![CDATA[
+       Retrieves the ViewHelper instance that has previously been registered
+       with viewName.
+              ]]></description>
+<param><![CDATA[viewName The name of the view for which we wish to retrieve a
+       ViewHelper, eg "login"
+       ]]></param>
+<returns><![CDATA[The ViewHelper instance that is required to manipulate the
+       view registered with viewName
+       ]]></returns>
+</method>
+<method name='registrationExistsFor' fullname='com.adobe.cairngorm.view:ViewLocator/registrationExistsFor' isStatic='false' isFinal='false' isOverride='false'  param_names='viewName' param_types='String' param_defaults='undefined' result_type='Boolean'><description><![CDATA[
+       Returns whether a view has been registered with a canonical name.
+              <p>If two views are registered with the same canonical name,
+       the second entry will overwrite the first. This method can be used to check
+       whether a view has already been registered with a canonical name.</p>
+              ]]></description>
+<param><![CDATA[The canonical name for the view that the ViewHelper will check, eg
+       "login"
+       ]]></param>
+<return><![CDATA[A Boolean that indicates if a view is already registered with that
+       view name
+       ]]></return>
+</method>
+<classRec name='ViewLocator' fullname='com.adobe.cairngorm.view:ViewLocator' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\view\ViewLocator.as' namespace='com.adobe.cairngorm.view' access='public' baseclass='Object' isFinal='false' isDynamic='false' ><description><![CDATA[
+    <p><strong>Deprecated as of Cairngorm 2.1.</strong></p>
+    
+    The ViewLocator is a singleton class, that is used to retreive ViewHelper
+    classes that can manipulate (get/set/switch) the user interface of a
+    Cairngorm RIA.
+        <p>Model-View-Controller (MVC) best practices specify that command classes 
+    should interact with the view using the model (see the ModelLocator class), 
+    but in some instance, command classes may require the assistance of 
+    ViewHelpers to get/set the user interface associated with the work they 
+    are designed to perform.  ViewHelper classes contain methods that allow 
+    them to interrogate (get) individual elements of the view, such as the 
+    values of form fields, and to update the user interface, such as setting the 
+    data provider on DataGrids or Listcomponents.  Additionally, a command may 
+    choose to toggle the user interface from one view to another - for instance, 
+    to take the user to a checkout screen.</p>
+        <p>
+    The ViewLocator class is used to allow commands to instantly retrieve
+    the appropriate ViewHelper.  A command need only know the canonical
+    name of a ViewHelper and the ViewLocator will return an instance of
+    the appropriate ViewHelper class.  In this way, command classes can
+    manipulate the View irrespective of its implementation.
+    </p>
+        ]]></description>
+<see><![CDATA[com.adobe.cairngorm.model.ModelLocator
+    ]]></see>
+<see><![CDATA[com.adobe.cairngorm.view.ViewHelper
+    ]]></see>
+<see><![CDATA[com.adobe.cairngorm.commands.ICommand
+    ]]></see>
+</classRec>
+<field name='commands' fullname='com.adobe.cairngorm.control:FrontController/protected:commands' type='flash.utils:Dictionary' isStatic='false' isConst='false' defaultValue='' ><description><![CDATA[
+      Dictionary of event name to command class mappings
+      ]]></description>
+</field>
+<method name='addCommand' fullname='com.adobe.cairngorm.control:FrontController/addCommand' isStatic='false' isFinal='false' isOverride='false'  param_names='commandName;commandRef;useWeakReference' param_types='String;Class;Boolean' param_defaults='undefined;undefined;true' result_type='void'><description><![CDATA[
+      Registers a ICommand class with the Front Controller, against an event name
+      and listens for events with that name.
+            <p>When an event is broadcast that matches commandName,
+      the ICommand class referred to by commandRef receives control of the
+      application, by having its execute() method invoked.</p>
+            ]]></description>
+<param><![CDATA[commandName The name of the event that will be broadcast by the
+      when a particular user gesture occurs, eg "login"
+            ]]></param>
+<param><![CDATA[commandRef An ICommand Class reference upon which execute()
+      can be called when the Front Controller hears an event broadcast with
+      commandName. Typically, this argument is passed as "LoginCommand" 
+      or similar.
+      
+      ]]></param>
+<param><![CDATA[useWeakReference A Boolean indicating whether the controller
+      should added as a weak reference to the CairngormEventDispatcher,
+      meaning it will eligibile for garbage collection if it is unloaded from 
+      the main application.
+      ]]></param>
+</method>
+<method name='removeCommand' fullname='com.adobe.cairngorm.control:FrontController/removeCommand' isStatic='false' isFinal='false' isOverride='false'  param_names='commandName' param_types='String' param_defaults='undefined' result_type='void'><description><![CDATA[
+      Deregisters an ICommand class with the given event name from the Front Controller 
+            ]]></description>
+<param><![CDATA[commandName The name of the event that will be broadcast by the
+      when a particular user gesture occurs, eg "login"
+            ]]></param>
+</method>
+<method name='executeCommand' fullname='com.adobe.cairngorm.control:FrontController/protected:executeCommand' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='com.adobe.cairngorm.control:CairngormEvent' param_defaults='undefined' result_type='void'><description><![CDATA[
+      Executes the command
+      ]]></description>
+</method>
+<method name='getCommand' fullname='com.adobe.cairngorm.control:FrontController/protected:getCommand' isStatic='false' isFinal='false' isOverride='false'  param_names='commandName' param_types='String' param_defaults='undefined' result_type='Class'><description><![CDATA[
+      Returns the command class registered with the command name. 
+      ]]></description>
+</method>
+<classRec name='FrontController' fullname='com.adobe.cairngorm.control:FrontController' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\control\FrontController.as' namespace='com.adobe.cairngorm.control' access='public' baseclass='Object' isFinal='false' isDynamic='false' ><description><![CDATA[
+    A base class for an application specific front controller,
+    that is able to dispatch control following particular user gestures to appropriate
+    command classes.
+        <p>
+    The Front Controller is the centralised request handling class in a
+    Cairngorm application.  Throughout the application architecture are
+    scattered a number of CairngormEventDispatcher.getInstance().dispatchEvent( event )
+    method calls, that signal to the listening controller that a user gesture
+    has occured.
+    </p>
+        <p>
+    The role of the Front Controller is to first register all the different
+    events that it is capable of handling against worker classes, called
+    command classes.  On hearing an application event, the Front Controller
+    will look up its table of registered events, find the appropriate
+    command for handling of the event, before dispatching control to the
+    command by calling its execute() method.
+    </p>
+        <p>
+    Commands are added to the front controller with a weak reference,
+    meaning that when the command is garbage collected, the reference in
+    the controller is also garbage collected.
+    </p>
+    
+    <p>
+    The Front Controller is a base-class that  listen for events 
+    dispatched by CairngormEventDispatcher.  In a 
+    Cairngorm application, the developer should create a class that
+    extends the FrontController, and in the constructor of their
+    application specific controller, they should make numerous calls to
+    addCommand() to register all the expected events with application
+    specific command classes.
+    </p>
+        <p>
+    Consider a LoginController, that is the main controller for a Login
+    application that has 2 user gestures - Login and Logout.  The application
+    will have 2 buttons, "Login" and "Logout" and in the click handler for
+    each button, one of the following methods is executed:
+    </p>
+        <pre>
+    public function doLogin() : void
+    {
+       var event : LoginEvent = new LoginEvent( username.text, password.text );
+       CairngormEventDispatcher.getInstance.dispatchEvent( event );
+    }
+    
+    public function doLogout() : void
+    {
+       var event : LogoutEvent = new LogoutEvent();
+       CairngormEventDispatcher.getInstance.dispatchEvent( event );
+    }
+    </pre>
+    
+    <p>
+    We would create LoginController as follows:
+    </p>
+        <pre>
+    class LoginController extends com.adobe.cairngorm.control.FrontController
+    {
+       public function LoginController()
+       {
+          initialiseCommands();
+       }
+    
+       public function initialiseCommands() : void
+       {
+          addCommand( LoginEvent.EVENT_LOGIN, LoginCommand );
+          addCommand( LogoutEvent.EVENT_LOGOUT, LogoutCommand );
+       }
+      
+    }
+    </pre>
+        <p>
+    In our concrete implementation of a FrontController, LoginController, we
+    register the 2 events that are expected for broadcast - login and logout -
+    using the addCommand() method of the parent FrontController class, to
+    assign a command class to each event.
+    </p>
+        <p>
+    Adding a new use-case to a Cairngorm application is as simple as
+    registering the event against a command in the application Front Controller,
+    and then creating the concrete command class.
+    </p>
+    
+    <p>
+    The concrete implementation of the FrontController, LoginController,
+    should be created once and once only (as we only want a single controller
+    in our application architecture).  Typically, in our main application, we
+    would declare our FrontController child class as a tag, which should be placed
+    above any tags which have a dependency on the FrontController
+    </p>
+        <pre>
+    &lt;mx:Application  xmlns:control="com.domain.project.control.LoginController"   ... &gt;
+          &lt;control:LoginController id="controller" /&gt;
+         ...
+    
+    </pre>
+        ]]></description>
+<see><![CDATA[com.adobe.cairngorm.commands.ICommand
+    ]]></see>
+</classRec>
+<field name='instance' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/private:instance' type='com.adobe.cairngorm.control:CairngormEventDispatcher' isStatic='true' isConst='false' >
+</field>
+<field name='eventDispatcher' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/private:eventDispatcher' type='flash.events:IEventDispatcher' isStatic='false' isConst='false' >
+</field>
+<method name='getInstance' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/getInstance' isStatic='true' isFinal='false' isOverride='false'  result_type='com.adobe.cairngorm.control:CairngormEventDispatcher'><description><![CDATA[
+       Returns the single instance of the dispatcher
+       ]]></description>
+</method>
+<method name='CairngormEventDispatcher' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/CairngormEventDispatcher' isStatic='false' isFinal='false' isOverride='false'  param_names='target' param_types='flash.events:IEventDispatcher' param_defaults='null' result_type='*'><description><![CDATA[
+       Constructor.
+       ]]></description>
+</method>
+<method name='addEventListener' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/addEventListener' isStatic='false' isFinal='false' isOverride='false'  param_names='type;listener;useCapture;priority;useWeakReference' param_types='String;Function;Boolean;int;Boolean' param_defaults='undefined;undefined;false;0;false' result_type='void'><description><![CDATA[
+       Adds an event listener.
+       ]]></description>
+</method>
+<method name='removeEventListener' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/removeEventListener' isStatic='false' isFinal='false' isOverride='false'  param_names='type;listener;useCapture' param_types='String;Function;Boolean' param_defaults='undefined;undefined;false' result_type='void'><description><![CDATA[
+       Removes an event listener.
+       ]]></description>
+</method>
+<method name='dispatchEvent' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/dispatchEvent' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='com.adobe.cairngorm.control:CairngormEvent' param_defaults='undefined' result_type='Boolean'><description><![CDATA[
+       Dispatches a cairngorm event.
+       ]]></description>
+</method>
+<method name='hasEventListener' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/hasEventListener' isStatic='false' isFinal='false' isOverride='false'  param_names='type' param_types='String' param_defaults='undefined' result_type='Boolean'><description><![CDATA[
+       Returns whether an event listener exists.
+       ]]></description>
+</method>
+<method name='willTrigger' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher/willTrigger' isStatic='false' isFinal='false' isOverride='false'  param_names='type' param_types='String' param_defaults='undefined' result_type='Boolean'><description><![CDATA[
+       Returns whether an event will trigger.
+       ]]></description>
+</method>
+<classRec name='CairngormEventDispatcher' fullname='com.adobe.cairngorm.control:CairngormEventDispatcher' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\control\CairngormEventDispatcher.as' namespace='com.adobe.cairngorm.control' access='public' baseclass='Object' isFinal='false' isDynamic='false' ><description><![CDATA[
+    The CairngormEventDispatcher class is a singleton class, used by the application
+    developer to broadcast events that correspond to user gestures and requests.
+        <p>The singleton implementation of the CairngormEventDispatcher ensures that one
+    and only one class can be responsible for broadcasting events that the
+    FrontController is subscribed to listen and react to.</p>
+        <p>
+    Since the CairngormEventDispatcher implements singleton access, use of the
+    singleton is simple to distribute throughout your application.  At
+    any point in your application, should you capture a user gesture
+    (such as in a click handler, or a dragComplete handler, etc) then
+    simply use a code idiom as follows:
+    </p>
+        <pre>
+    //LoginEvent inherits from com.adobe.cairngorm.control.CairngormEvent
+    var eventObject : LoginEvent = new LoginEvent();
+    eventObject.username = username.text;
+    eventObject.password = username.password;
+    
+    CairngormEventDispatcher.getInstance().dispatchEvent( eventObject );
+    </pre>
+        ]]></description>
+<see><![CDATA[com.adobe.cairngorm.control.FrontController
+    ]]></see>
+<see><![CDATA[com.adobe.cairngorm.control.CairngormEvent
+    ]]></see>
+<see><![CDATA[flash.events.IEventDispatcher
+    ]]></see>
+</classRec>
+<method name='responder' fullname='com.universalmind.cairngorm.business:Delegate/responder/get' isStatic='false' isFinal='false' isOverride='false'  result_type='mx.rpc:IResponder'><description><![CDATA[
+    public read-only access to current Responder
+    
+    ]]></description>
+<return><![CDATA[The current responder registered to handle reponses. Note: this should not be confused with
+    intermediate responders that are used in the example code. This is the responder used internally when
+    notifyCallers() is invoked.
+    ]]></return>
+</method>
+<method name='getServiceByName' fullname='com.universalmind.cairngorm.business:Delegate/getServiceByName' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceName' param_types='String' param_defaults='' result_type='Object'><description><![CDATA[
+    Utility method to get a service by name; useful if a delegate call needs a service
+    that is different originally registered in the Delegate constructor
+    
+    ]]></description>
+<return><![CDATA[An instance of either a WebService, HTTPService, RemoteObject, or null.
+    ]]></return>
+</method>
+<method name='service' fullname='com.universalmind.cairngorm.business:Delegate/service/get' isStatic='false' isFinal='false' isOverride='false'  result_type='Object'><description><![CDATA[
+      Getter that performs an internal lookup of the service using the ServiceLocator. Note the serviceName
+      used is the one originally registered in the Delegate constructor. The Delegate subclass NEVER have to use
+      or import a ServiceLocator; such details are encapsulated and handled by this Delegate parent class. 
+   
+   ]]></description>
+<return><![CDATA[An instance of either a WebService, HTTPService, RemoteObject, or null.
+      ]]></return>
+</method>
+<method name='Delegate' fullname='com.universalmind.cairngorm.business:Delegate/Delegate' isStatic='false' isFinal='false' isOverride='false'  param_names='commandHandlers;serviceName' param_types='mx.rpc:IResponder;String' param_defaults='null;' result_type='*'><description><![CDATA[
+      Constructor that allows easy registration of responder and the ID/name of the service
+      instance that should be used for remote calls
+      
+      ]]></description>
+<param><![CDATA[commandHandlers This responder that will be used as the synchronous or asynchronous response
+      to a delegate call
+      
+      ]]></param>
+<param><![CDATA[serviceName This is the ID or name of the service [HTTPService, RemoteObject, WebService] that
+      should be used to perform the remote dataservice call. This service instance is retrieved via an internal
+      call to the ServiceLocator.
+      ]]></param>
+</method>
+<method name='prepareResponder' fullname='com.universalmind.cairngorm.business:Delegate/prepareResponder' isStatic='true' isFinal='false' isOverride='false'  param_names='token;resultHandler;faultHandler' param_types='mx.rpc:AsyncToken;Function;Function' param_defaults='undefined;undefined;undefined' result_type='void'><description><![CDATA[
+   Static utility method used to quickly add responder handlers to an AsyncToken
+   
+   ]]></description>
+<param><![CDATA[token           AsyncToken that is returned from a AbstractMethod call
+   ]]></param>
+<param><![CDATA[resultHandler   Function that should be invoked asynchronously to handle the ResultEvent
+   ]]></param>
+<param><![CDATA[faultHandler    Function that should be invoked asynchronously to handle the FaultEvent
+   
+   ]]></param>
+</method>
+<method name='prepareHandlersWithOptions' fullname='com.universalmind.cairngorm.business:Delegate/prepareHandlersWithOptions' isStatic='false' isFinal='false' isOverride='false'  param_names='token;options;handlers' param_types='mx.rpc:AsyncToken;;com.universalmind.cairngorm.events:Callbacks' param_defaults='null;null;null' result_type='void'><description><![CDATA[
+   Utility method used to add responder handlers (and options) to an AsyncToken
+   
+   ]]></description>
+<param><![CDATA[token           AsyncToken that is returned from a AbstractMethod call
+   ]]></param>
+<param><![CDATA[options         Generic object that contains one or more properties/objects that should be cached while waiting for a response from the aysnchronous call
+   
+   ]]></param>
+<param><![CDATA[faultHandler    Callbacks instance to specific overrides to the current responder. This allows
+   inidividual methods to have custom handlers internal to the Delegate subclass. Such solutions would be used to transform data
+   before a Command responder is then called. 
+   
+   ]]></param>
+</method>
+<method name='prepareHandlers' fullname='com.universalmind.cairngorm.business:Delegate/prepareHandlers' isStatic='false' isFinal='false' isOverride='false'  param_names='token;handlers' param_types='mx.rpc:AsyncToken;com.universalmind.cairngorm.events:Callbacks' param_defaults='null;null' result_type='void'><description><![CDATA[
+   Utility method used to add responder handlers (and options) to an AsyncToken. If the service token has not been configured
+   properly, this method will throw an error announcing an initialization issue with the service.
+   
+   ]]></description>
+<param><![CDATA[token           AsyncToken that is returned from a AbstractMethod call
+   ]]></param>
+<param><![CDATA[faultHandler    Callbacks instance to specific overrides to the current responder. This allows
+   inidividual methods to have custom handlers internal to the Delegate subclass. Such solutions would be used to transform data
+   before a Command responder is then called. 
+      ]]></param>
+<throws><![CDATA[Error Announces that the service instance has not been initialized properly. 
+   ]]></throws>
+</method>
+<method name='notifyCaller' fullname='com.universalmind.cairngorm.business:Delegate/notifyCaller' isStatic='false' isFinal='false' isOverride='false'  param_names='results;srcEvent' param_types=';' param_defaults='null;null' result_type='void'><description><![CDATA[
+     This method allows a delegate method to manually announce a response to the the original responder.
+     This method is normally not used since the prepareHandlers() call connects the asynchronous handlers for the 
+     responder DIRECTLY to the remote call. In such cases the delegate is bypassed completely.
+     
+     <p>
+     However, if the delegate call wishes to "massage" the incoming response before notifying the original responder
+     then prepareHandlers() is given an "intermediate" responder... and the developer is then responsible for manually invoking
+     the original responder. Below is an example for a LoginDelegate subclass:
+     
+      <pre>
+      public function loginUser(user:UserVO) : void {
+         var token    : AsyncToken = service.loginUser(user);
+         var handlers : Callbacks  = new Callbacks(onResults_loginUser);
+               // Here we want to use an intermediate handler BEFORE we use the original
+         // responder.
+         prepareHandlers(token,handlers);
+      }
+      
+      public function onResults_doLogin(event:ResultEvent):void {
+         var response : LoginResponseVO = (event.result as LoginResponseVO); 
+         if (response.errorCode == ERROR_USER_ALREADY_CONNECTED) {
+              response.errorCode = LOGIN_GOOD;
+         }
+       
+         // This uses [internally] the original delegate responder...
+         notifyCaller(response,event);
+      }
+      </pre>
+      
+      ]]></description>
+<results><![CDATA[   This is the data or event to return to the "original" IResponder
+      ]]></results>
+<srcEvent><![CDATA[  This is the original event generated as response to the Delegates asynchronous call
+     ]]></srcEvent>
+</method>
+<method name='onResult' fullname='com.universalmind.cairngorm.business:Delegate/onResult' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='' param_defaults='undefined' result_type='void'><description><![CDATA[
+      ]]></description>
+<private><![CDATA[- This method is ONLY necessary to allow Delegates to "implement" the IResponder interface;
+      ]]></private>
+</method>
+<method name='onFault' fullname='com.universalmind.cairngorm.business:Delegate/onFault' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='' param_defaults='null' result_type='void'><description><![CDATA[
+      ]]></description>
+<private><![CDATA[- This method is ONLY necessary to allow Delegates to "implement" the IResponder interface;
+      ]]></private>
+</method>
+<method name='getResultHandler' fullname='com.universalmind.cairngorm.business:Delegate/private:getResultHandler' isStatic='false' isFinal='false' isOverride='false'  param_names='delegateHandlers' param_types='com.universalmind.cairngorm.events:Callbacks' param_defaults='null' result_type='Function'>
+</method>
+<method name='getFaultHandler' fullname='com.universalmind.cairngorm.business:Delegate/private:getFaultHandler' isStatic='false' isFinal='false' isOverride='false'  param_names='delegateHandlers' param_types='com.universalmind.cairngorm.events:Callbacks' param_defaults='null' result_type='Function'>
+</method>
+<method name='makeMethodClosure' fullname='com.universalmind.cairngorm.business:Delegate/private:makeMethodClosure' isStatic='false' isFinal='false' isOverride='false'  param_names='method;scope' param_types='String;mx.rpc:IResponder' param_defaults='undefined;null' result_type='Function'>
+</method>
+<method name='throwError' fullname='com.universalmind.cairngorm.business:Delegate/private:throwError' isStatic='false' isFinal='false' isOverride='false'  param_names='eventType' param_types='String' param_defaults='undefined' result_type='void'>
+</method>
+<method name='serviceRegistry' fullname='com.universalmind.cairngorm.business:Delegate/private:serviceRegistry/get' isStatic='false' isFinal='false' isOverride='false'  result_type='com.universalmind.cairngorm.business:ServiceLocator'>
+</method>
+<field name='__service' fullname='com.universalmind.cairngorm.business:Delegate/private:__service' type='' isStatic='false' isConst='false' >
+</field>
+<field name='__serviceName' fullname='com.universalmind.cairngorm.business:Delegate/private:__serviceName' type='String' isStatic='false' isConst='false' >
+</field>
+<field name='__responder' fullname='com.universalmind.cairngorm.business:Delegate/private:__responder' type='mx.rpc:IResponder' isStatic='false' isConst='false' >
+</field>
+<classRec name='Delegate' fullname='com.universalmind.cairngorm.business:Delegate' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\business\Delegate.as' namespace='com.universalmind.cairngorm.business' access='public' baseclass='Object' isFinal='false' isDynamic='false' ><description><![CDATA[
+    A base class used to access remote data services or local storage mechanisms.
+    A Delegate subclass is usually used for 1-to-1 mappings to services and API calls on the remote server
+        <p>
+    While some MVC approaches deprecate the use of Delegates as an un-necessary layer 
+    and use the Command classes to directly access the Services[.mxml]-based services,
+    that bypass is not recommended. 
+    
+    This base class provides several functional features that reduce complexities
+    for subclasses:
+      a) Implicit getter "service" that will return an internal lookup of the service with the name specified in the 
+         Delegate constructor
+      b) getServiceByName() that will look up the service by name from the ServiceLocator singleton
+      c) prepareHandlers() that will connect any IResponder handlers to the AsyncToken produced by calls to remote dataservices
+    
+    </p>
+        <p>
+    The Delegate class is ideal class to:
+      a) to queue multiple server calls for 1 command request
+      b) to transform the data before delivery to the command.
+         e.g. 
+           Transform incoming structures to value objects 
+           Transform outgoing value objects to XML  
+    </p>
+        <p>
+    Delegates use a responder constructor argument that will be used to announce
+    responses (result or fault) for asynchronous events. The responders is typically an
+    instance of the Command class. However, it may also be ANY class that supports the IResponder
+    interface. 
+    
+    Below is sample code 
+    </p>
+        ]]></description>
+<example><![CDATA[The following is an example Delegate subclass that (a) uses intermediate responders, 
+    (b) transformation utils, and (c) notifyCallers() [usually a Command instance]. 
+    <listing version="3.0">
+       public class LoginDelegate extends Delegate {
+      
+           public function LoginDelegate(handlers:IResponder,serviceID:String = "") {
+         if (serviceID == "") serviceID = "serviceLogin";
+             super(handlers,serviceID);
+           }
+    
+           public function loginUser(user:UserVO) : void {
+               var token    : AsyncToken = service.loginUser(user);
+               var handlers : Callbacks  = new Callbacks(onResults_loginUser);
+                   // Here we want to use an intermediate handler BEFORE we use the original
+               // responder.
+               prepareHandlers(token,handlers);
+           }
+    
+           public function onResults_doLogin(event:ResultEvent):void {
+               var response : LoginResponseVO = (event.result as LoginResponseVO);
+               var login    : LoginUtils      = new LoginUtils(response);
+               if (login.status == LoginUtils.ERROR_USER_ALREADY_CONNECTED) {
+                    response.errorCode = LoginUtils.LOGIN_GOOD;
+               }
+     
+               // This uses [internally] the original delegate responder...
+               notifyCallers(new ResultEvent(response));
+           }
+        }
+    </listing>
+     
+    ]]></example>
+<see><![CDATA[com.universalmind.cairngorm.events.Callbacks
+    ]]></see>
+</classRec>
+<method name='listenForEvent' fullname='com.universalmind.cairngorm.control:BaseController/protected:listenForEvent' isStatic='false' isFinal='false' isOverride='false'  param_names='eventType;handler' param_types='String;Function' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+         This function allows FrontController subclasses to easily register new 
+         event-command mappings.
+         
+         ]]></description>
+<eventType><![CDATA[This is the event.type or ID of events that we will listen for.
+         ]]></eventType>
+<handler><![CDATA[  This is the event handler; usually this is the FrontController::execute()
+         ]]></handler>
+</method>
+<method name='hookDispatchEvent' fullname='com.universalmind.cairngorm.control:BaseController/private:hookDispatchEvent' isStatic='true' isFinal='false' isOverride='false'  result_type='Boolean'><description><![CDATA[
+       Add a hook into dispatchEvent high up in the inheritance chain.  Any
+       subclass of UIComponent is now "UMEvent-aware" and no longer
+       needs separate event dispatching code for Cairngorm events.
+       The event is still dispatched normally but ALSO gets sent to the CairngormEventDispatcher
+       ]]></description>
+</method>
+<method name='eventHook' fullname='com.universalmind.cairngorm.control:BaseController/private:eventHook' isStatic='true' isFinal='false' isOverride='false'  param_names='event;uic' param_types='flash.events:Event;mx.core:UIComponent' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       The event hook itself.  Any time we encounter a UMEvent, we
+       dispatch it directly through the centralized UMEventDispatcher.  This
+       abstraction prevents UI subclasses from having to know how to deal with
+       UM events.
+       ]]></description>
+</method>
+<field name='__dispatchEventHooked' fullname='com.universalmind.cairngorm.control:BaseController/private:__dispatchEventHooked' type='Boolean' isStatic='true' isConst='false' defaultValue='' ><description><![CDATA[ Create the dispatch event hook when the Application is created. ]]></description>
+</field>
+<field name='___dispatcher' fullname='com.universalmind.cairngorm.control:BaseController/private:___dispatcher' type='com.adobe.cairngorm.control:CairngormEventDispatcher' isStatic='true' isConst='false' defaultValue='' ><description><![CDATA[ Maintain a reference to prevent garbage collection. Also shortcut alias ]]></description>
+</field>
+<classRec name='BaseController' fullname='com.universalmind.cairngorm.control:BaseController' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\control\BaseController.as' namespace='com.universalmind.cairngorm.control' access='public' baseclass='com.adobe.cairngorm.control:FrontController' isFinal='false' isDynamic='false' ><description><![CDATA[
+          The traditional cairngorm FrontController requires events to be dispatched
+     to the CairngormEventDispatcher in order for the "event->command" mappings to 
+     trigger. This Class continues to support that mechanism [for direct triggering] but now
+     supports an improved mechanism for dispatching CairngormEvents from the UI layers.
+     
+     <p> 
+     Alternate extensions have modified the FrontController to not only register
+     events with the CairngormEventDispatcher but also with the <mx:Application>.
+     This solution would allow events - via event bubbling - to reach the Cairngorm framework
+     and not require the use of CairngormEventDispatcher in view class. Opponents 
+     of this solution did not want their Cairngorm events to bubble thru the entire 
+     view hierarchy.
+     </p>
+     
+     <p>
+     Recent changes have now leveraged a UIComponent event hook to not only dispatch
+     the event "up" the view hierarchy but to also directly trigger the Cairngorm 
+     event->command mapping (if any exists).
+     </p>
+     ]]></description>
+</classRec>
+<field name='rb' fullname='com.adobe.cairngorm:CairngormError/private:rb' type='mx.resources:ResourceBundle' isStatic='true' isConst='false' defaultValue='' >
+</field>
+<method name='CairngormError' fullname='com.adobe.cairngorm:CairngormError/CairngormError' isStatic='false' isFinal='false' isOverride='false'  param_names='errorCode;rest' param_types='String;restParam' param_defaults='undefined;undefined' result_type='*'>
+</method>
+<method name='formatMessage' fullname='com.adobe.cairngorm:CairngormError/private:formatMessage' isStatic='false' isFinal='false' isOverride='false'  param_names='errorCode;rest' param_types='String;restParam' param_defaults='undefined;undefined' result_type='String'>
+</method>
+<method name='resourceBundle' fullname='com.adobe.cairngorm:CairngormError/protected:resourceBundle/get' isStatic='false' isFinal='false' isOverride='false'  result_type='mx.resources:ResourceBundle'>
+</method>
+<classRec name='CairngormError' fullname='com.adobe.cairngorm:CairngormError' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\CairngormError.as' namespace='com.adobe.cairngorm' access='public' baseclass='Error' isFinal='false' isDynamic='false' ><description><![CDATA[
+  Error class thrown when a Cairngorm error occurs.
+  Used to substitute data in error messages.
+  ]]></description>
+</classRec>
+<field name='PRIORITY_BEFORE' fullname='com.universalmind.cairngorm.events:Callbacks/PRIORITY_BEFORE' type='int' isStatic='true' isConst='true' defaultValue='0' >
+</field>
+<field name='PRIORITY_AFTER' fullname='com.universalmind.cairngorm.events:Callbacks/PRIORITY_AFTER' type='int' isStatic='true' isConst='true' defaultValue='1' >
+</field>
+<field name='PRIORITY_OVERRIDE' fullname='com.universalmind.cairngorm.events:Callbacks/PRIORITY_OVERRIDE' type='int' isStatic='true' isConst='true' defaultValue='2' >
+</field>
+<field name='resultHandler' fullname='com.universalmind.cairngorm.events:Callbacks/resultHandler' type='Function' isStatic='false' isConst='false' ><description><![CDATA[ Result handler function ]]></description>
+</field>
+<field name='faultHandler' fullname='com.universalmind.cairngorm.events:Callbacks/faultHandler' type='Function' isStatic='false' isConst='false' ><description><![CDATA[ Fault handler function ]]></description>
+</field>
+<field name='conflictHandler' fullname='com.universalmind.cairngorm.events:Callbacks/conflictHandler' type='Function' isStatic='false' isConst='false' ><description><![CDATA[ Conflict handler function ]]></description>
+</field>
+<field name='priority' fullname='com.universalmind.cairngorm.events:Callbacks/priority' type='int' isStatic='false' isConst='false' ><description><![CDATA[ Priority of these callbacks over OTHER potential callbacks also registered ]]></description>
+</field>
+<method name='Callbacks' fullname='com.universalmind.cairngorm.events:Callbacks/Callbacks' isStatic='false' isFinal='false' isOverride='false'  param_names='resultFunc;faultFunc;conflictFunc;priority' param_types='Function;Function;Function;int' param_defaults='undefined;null;null;unknown' result_type='*'><description><![CDATA[
+     Constructor that allows users to specify result, fault, and conflict handlers.
+     
+     ]]></description>
+<resultFunc><![CDATA[ The function that should be invoked as the resultHandler for a response
+     ]]></resultFunc>
+<faultFunc><![CDATA[  The function that should be invoked as the faultHandler for a response
+     ]]></faultFunc>
+<conflicFunc><![CDATA[The function that should be invoked as the conflictHandler for a response
+     ]]></conflicFunc>
+</method>
+<method name='result' fullname='com.universalmind.cairngorm.events:Callbacks/result' isStatic='false' isFinal='false' isOverride='false'  param_names='info' param_types='Object' param_defaults='undefined' result_type='void'><description><![CDATA[ Required method to support the IResponder interface ]]></description>
+</method>
+<method name='fault' fullname='com.universalmind.cairngorm.events:Callbacks/fault' isStatic='false' isFinal='false' isOverride='false'  param_names='info' param_types='Object' param_defaults='undefined' result_type='void'><description><![CDATA[ Required method to support the IResponder interface ]]></description>
+</method>
+<classRec name='Callbacks' fullname='com.universalmind.cairngorm.events:Callbacks' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\events\Callbacks.as' namespace='com.universalmind.cairngorm.events' access='public' baseclass='Object' interfaces='mx.rpc:IResponder' isFinal='false' isDynamic='false' ><description><![CDATA[
+   This class is a superset of mx.rpc.Responder that
+   allows developers to quickly create a responder with only a resultHandler
+   or result, fault, and conflict handlers. 
+   ]]></description>
+</classRec>
+<method name='execute' fullname='com.universalmind.cairngorm.commands:Command/execute' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='com.adobe.cairngorm.control:CairngormEvent' param_defaults='undefined' result_type='void'><description><![CDATA[ 
+       This function allows the incoming event to "cache" optional caller notification details.
+       Note: this method is overridden by the subclass; and should always be called by the subclass.
+       
+       ]]></description>
+<param><![CDATA[event The event that was dispatched by a caller and recieved by an instance of the command subclass.
+       ]]></param>
+</method>
+<method name='dispatchEvent' fullname='com.universalmind.cairngorm.commands:Command/dispatchEvent' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='com.adobe.cairngorm.control:CairngormEvent' param_defaults='undefined' result_type='void'><description><![CDATA[
+     This method allows commands to dispatch business events. This functionality allows commands to 
+     to decoupled and provides better cohesion for inter-command activity.
+     
+     ]]></description>
+<event><![CDATA[This is a new business event that should be dispatched; and may be handled by the same class
+     or by another completely separate command subclass instance.
+     
+     ]]></event>
+<see><![CDATA[com.universalmind.cairngorm.FrontController
+     ]]></see>
+</method>
+<method name='notifyCaller' fullname='com.universalmind.cairngorm.commands:Command/notifyCaller' isStatic='false' isFinal='false' isOverride='false'  param_names='results' param_types='' param_defaults='null' result_type='void'><description><![CDATA[ 
+       This method allows callers (if originally packaged with the incoming event) to be receive a notification of response.
+       
+       <p>
+       Conventional Cairngorm MVC solutions use the ModelLocator as a global repository and views {bind} to variables
+       exposed within the ModelLocator instance. Often, as enterprise needs scale the complexity of the applicaiton,
+       view instances need proprietary data that should not be shared nor contained within the ModelLocator. Direct "caller notification"
+       from command instances allow commands to deliver data [aka "notify"] to views or callers. The Callbacks class allows the
+       command to ignore any coupling issues regarding datatypes of the caller.
+       </p>
+        
+       ]]></description>
+<results><![CDATA[This is any data type that should be provided to the caller. If the type is a faultEvent, then the caller's faultHandler is invoked.
+       All other data types (including scalar values) are delivered to the caller by invoking its resultHandler.
+       
+       ]]></results>
+<see><![CDATA[com.universalmind.cairngorm.events.Callbacks
+       ]]></see>
+</method>
+<method name='cacheCaller' fullname='com.universalmind.cairngorm.commands:Command/protected:cacheCaller' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='flash.events:Event' param_defaults='undefined' result_type='void'><description><![CDATA[ 
+       This method caches optional callers response handlers so callers can later receive a notification of response.
+       
+       <p>
+       Normally this method is called by Command subclasses calling super.execute(). 
+       However, manual invocation of this method is also supported.
+       </p>
+        
+       ]]></description>
+<event><![CDATA[If the event is an UMEvent subclass, then IResponder handlers [optional] are cached for future use.
+       
+       ]]></event>
+<see><![CDATA[com.universalmind.cairngorm.events.Callbacks
+       ]]></see>
+<see><![CDATA[com.universalmind.cairngorm.events.UMEvent
+       ]]></see>
+</method>
+<method name='result' fullname='com.universalmind.cairngorm.commands:Command/result' isStatic='false' isFinal='false' isOverride='false'  param_names='info' param_types='Object' param_defaults='undefined' result_type='void'><description><![CDATA[
+        Method required to allow Commands to support the "result" response for the IResponder interfaces.
+        Support of the IResponder interface allows command instances to use either Callbacks as proxy Responders or the command instance itself to 
+        serve as the responder to a delegate or remote dataservice call.
+        
+        ]]></description>
+<info><![CDATA[The object that is returned as the Result of the [usually] asychronous call.
+        
+        ]]></info>
+<see><![CDATA[mx.rpc.IResponder
+        ]]></see>
+</method>
+<method name='fault' fullname='com.universalmind.cairngorm.commands:Command/fault' isStatic='false' isFinal='false' isOverride='false'  param_names='info' param_types='Object' param_defaults='undefined' result_type='void'><description><![CDATA[
+        Method required to allow Commands to support the "fault" response for the IResponder interfaces.
+        Support of the IResponder interface allows command instances to use either Callbacks as proxy Responders or the command instance itself to 
+        serve as the responder to a delegate or remote dataservice call.
+        
+        ]]></description>
+<info><![CDATA[The object that is returned as the Result of the [usually] asychronous call.
+        
+        ]]></info>
+<see><![CDATA[mx.rpc.IResponder
+        ]]></see>
+</method>
+<method name='onFault' fullname='com.universalmind.cairngorm.commands:Command/onFault' isStatic='false' isFinal='false' isOverride='false'  param_names='info' param_types='Object' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Utility method to allow command subclasses to use a shared method for "fault" respones.
+       ]]></description>
+</method>
+<method name='buildTokenOptions' fullname='com.universalmind.cairngorm.commands:Command/protected:buildTokenOptions' isStatic='false' isFinal='false' isOverride='false'  param_names='details' param_types='' param_defaults='undefined' result_type='Command.as$30:TokenOptions'><description><![CDATA[
+   Method to allow commands to gather information for caching during asynchronous calls.
+   After the asynchronous RDS is dispatched, this preserves all information for access by 
+   the result/fault handlers... if needed.
+   
+   ]]></description>
+<details><![CDATA[This is an associative array [aka Object] that contains key/value pairs of information.
+   ]]></details>
+</method>
+<method name='getTokenOption' fullname='com.universalmind.cairngorm.commands:Command/protected:getTokenOption' isStatic='false' isFinal='false' isOverride='false'  param_names='event;key' param_types='flash.events:Event;String' param_defaults='undefined;undefined' result_type='*'><description><![CDATA[
+    This utility method provides an easy lookup of an token-cached value; to be retrieved by key/name
+    
+    ]]></description>
+<event><![CDATA[This is the asynchronous response event (FaultEvent or ResultEvent) that may have TokenOptions cached.
+    ]]></event>
+<key><![CDATA[  This is the key/name used to lookup the value cached in the TokeOptions array.
+    
+    ]]></key>
+</method>
+<field name='__viewHandlers' fullname='com.universalmind.cairngorm.commands:Command/private:__viewHandlers' type='mx.rpc:IResponder' isStatic='false' isConst='false' defaultValue='null' ><description><![CDATA[ 
+   By default Commands will handle the dataservice result/fault events themselves... views have not registered
+   This variable allows the caller's responders to be invoked.
+   
+   ]]></description>
+<private><![CDATA[   ]]></private>
+</field>
+<method name='TokenOptions' fullname='Command.as$30:TokenOptions/TokenOptions' isStatic='false' isFinal='false' isOverride='false'  param_names='options' param_types='Object' param_defaults='undefined' result_type='*'><description><![CDATA[
+   Constructor to easily transform generic token objects to a stronger class type
+   ]]></description>
+</method>
+<classRec name='Command' fullname='com.universalmind.cairngorm.commands:Command' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\commands\Command.as' namespace='com.universalmind.cairngorm.commands' access='public' baseclass='Object' interfaces='com.adobe.cairngorm.commands:ICommand;mx.rpc:IResponder' isFinal='false' isDynamic='false' ><description><![CDATA[
+    A base class used by developers to (a) allow a single command class to manage multiple events, 
+    (b) provide easy notifications to callers, (c) allows commands to dispatch business events,
+    and (d) allows data to be easily cached for calls to delegates or remote services. 
+    
+    Using the Callbacks class, ANY caller can serve as an Responder without implementing 
+    the IResponder interface(s). Using the UMEvent class, any such event recieved at the 
+    Command instance can contain optional information that will be used later for caller notifications.
+        ]]></description>
+<example><![CDATA[This example demonstrates how the Command class can be subclass and used properly.
+    
+    <listing version="3.0">
+       public class LoginCommand extends Command {
+    
+          override public function execute(event:CairngormEvent):void {
+              // always call the super.execute() method which allows the 
+              // callBack information to be cached.
+    
+              super.execute(event);
+    
+              switch(event.type) {
+                   case LoginUserEvent.EVENT_ID  :  doLogin(event as LoginUserEvent);  break;
+                   case LogoutUserEvent.EVENT_ID :  doLogout(event as LogoutUserEvent); break;
+              }
+          }
+    
+          private function doLogin(event:LoginUserEvent)  :void {  
+                var handlers : Callbacks     = new Callbacks(onResults_doLogin,onFault);
+                var delegate : LoginDelegate = new LoginDelegate(handlers);
+    
+       delegate.login(event.userID,event.password);
+       }
+          private function doLogout(event:LogoutUserEvent):void { ; }
+    
+          //           // DataService Result Handlers
+          //     
+          private function onResults_doLogin(event::void {
+                __model.user = (event.result as UserVO);
+          }
+    
+          private var __model : ModelLocator = ModelLocator.getInstance();
+       }
+    </listing>
+    
+    ]]></example>
+<see><![CDATA[com.universalmind.cairngorm.events.Callbacks
+    ]]></see>
+<see><![CDATA[com.universalmind.cairngorm.events.UMEvent
+    ]]></see>
+</classRec>
+<classRec name='TokenOptions' fullname='Command.as$30:TokenOptions' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\commands\Command.as' namespace='Command.as$30' access='private' baseclass='Object' isFinal='false' isDynamic='true' ><description><![CDATA[
+  This is a class internal to the commands package that allows command subclasses to easily
+  use the async token to cache information between aysnchronous invocations and their responses.
+  ]]></description>
+</classRec>
+<field name='nextEvent' fullname='com.adobe.cairngorm.commands:SequenceCommand/nextEvent' type='com.adobe.cairngorm.control:CairngormEvent' isStatic='false' isConst='false' ><description><![CDATA[
+       The next event in the sequence.
+       ]]></description>
+</field>
+<method name='SequenceCommand' fullname='com.adobe.cairngorm.commands:SequenceCommand/SequenceCommand' isStatic='false' isFinal='false' isOverride='false'  param_names='nextEvent' param_types='com.adobe.cairngorm.control:CairngormEvent' param_defaults='null' result_type='void'><description><![CDATA[
+       Constructor, with optional nextEvent.
+       ]]></description>
+</method>
+<method name='execute' fullname='com.adobe.cairngorm.commands:SequenceCommand/execute' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='com.adobe.cairngorm.control:CairngormEvent' param_defaults='undefined' result_type='void'><description><![CDATA[ 
+       Abstract implementation of the execute() method.
+              <p>ActionScript does not explicity support abstract methods and abstract classes, so this concrete 
+       implementation of the interface method must be overridden by the developer.</p>
+       
+       ]]></description>
+</method>
+<method name='executeNextCommand' fullname='com.adobe.cairngorm.commands:SequenceCommand/executeNextCommand' isStatic='false' isFinal='false' isOverride='false'  result_type='void'><description><![CDATA[
+       Call to execute the next command in the sequence.
+       
+       <p>Called explicitly by the developer within a concrete SequenceCommand implementation, this method causes the
+       event registered with nextEvent to be broadcast, for the next command in the sequence to be called 
+       without further user-gesture.</p>
+       
+       ]]></description>
+</method>
+<classRec name='SequenceCommand' fullname='com.adobe.cairngorm.commands:SequenceCommand' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\commands\SequenceCommand.as' namespace='com.adobe.cairngorm.commands' access='public' baseclass='Object' interfaces='com.adobe.cairngorm.commands:ICommand' isFinal='false' isDynamic='false' ><description><![CDATA[
+    The SequenceCommand is provided as a "psuedo-abstract" (since ActionScript
+    has no real concept of abstract classes) base-class that can be extended when
+    you wish to chain commands together for a single user-gesture, or establish
+    some simple form of decision-based workflow.
+    
+    <p>
+    By extending SequenceCommand, you can specify the event that should be 
+    broadcast to the controller (causing another command execution
+    without a further user-gesture) when the current command has completed
+    execution.
+    </p>
+        <p>
+    For a command implementing the Responder interface, you may choose to
+    sequence a subsequent command on successful completion of the command,
+    in the onResult() handler, or on failure of the command in the onFault()
+    method.
+    </p>
+        <p>
+    For commands that do not implement the Responder interface, you can 
+    simply chain commands by causing the sequenced command to be invoked
+    as the last action in your command's execute() method.
+    </p>
+        <p>
+    <b>Usage</b>
+    </p>
+        <p>
+    In the constructor of a concrete SequenceCommand implementation, you
+    should set nextEvent to the event that is responsible for calling your 
+    subsequent command.
+    </p>
+    
+    <p>
+    Alternatively, you can override the implicit nextEvent getter, to 
+    programmatically decide at runtime which event should be broadcast
+    next.
+    </p>
+        <p>
+    Invocation of the next command in the sequence is explicitly controlled by
+    the developer, by calling the executeNextCommand() method provided in the
+    SequenceCommand base-class.  This can be called either in the body of the execute() method
+    (for synchronous sequencing) or in the body of an onResult() or onFault()
+    handler (for asynchronous sequencing, that can also support conditional
+    workflow).
+    </p>
+        ]]></description>
+<see><![CDATA[com.adobe.cairngorm.commands.ICommand
+    ]]></see>
+<see><![CDATA[com.adobe.cairngorm.control.CairngormEventDispatcher
+    ]]></see>
+</classRec>
+<method name='register' fullname='com.adobe.cairngorm.business:AbstractServices/register' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceLocator' param_types='com.adobe.cairngorm.business:IServiceLocator' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Register the services.
+       ]]></description>
+<param><![CDATA[serviceLocator the IServiceLocator isntance.
+       ]]></param>
+</method>
+<method name='getService' fullname='com.adobe.cairngorm.business:AbstractServices/getService' isStatic='false' isFinal='false' isOverride='false'  param_names='name' param_types='String' param_defaults='undefined' result_type='Object'><description><![CDATA[
+       Return the service with the given name.
+       ]]></description>
+<param><![CDATA[name the name of the service.
+       ]]></param>
+<return><![CDATA[the service.
+       ]]></return>
+</method>
+<method name='setCredentials' fullname='com.adobe.cairngorm.business:AbstractServices/setCredentials' isStatic='false' isFinal='false' isOverride='false'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='setRemoteCredentials' fullname='com.adobe.cairngorm.business:AbstractServices/setRemoteCredentials' isStatic='false' isFinal='false' isOverride='false'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the remote credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='logout' fullname='com.adobe.cairngorm.business:AbstractServices/logout' isStatic='false' isFinal='false' isOverride='false'  result_type='void'><description><![CDATA[
+       Log the user out of all registered services.
+       ]]></description>
+</method>
+<method name='getAccessors' fullname='com.adobe.cairngorm.business:AbstractServices/protected:getAccessors' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceLocator' param_types='com.adobe.cairngorm.business:IServiceLocator' param_defaults='undefined' result_type='XMLList'><description><![CDATA[
+       Return all the accessors on this object.
+       ]]></description>
+<param><![CDATA[serviceLocator the IServiceLocator instance.
+       ]]></param>
+<return><![CDATA[this object's accessors.
+       ]]></return>
+</method>
+<classRec name='AbstractServices' fullname='com.adobe.cairngorm.business:AbstractServices' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\business\AbstractServices.as' namespace='com.adobe.cairngorm.business' access='public' baseclass='Object' interfaces='com.adobe.cairngorm.business:IServices' isFinal='false' isDynamic='false' ><description><![CDATA[
+    Used to manage all services defined on the IServiceLocator instance.
+    ]]></description>
+</classRec>
+<field name='view' fullname='com.adobe.cairngorm.view:ViewHelper/protected:view' type='Object' isStatic='false' isConst='false' ><description><![CDATA[
+      The view referred to by this view helper
+      ]]></description>
+</field>
+<field name='id' fullname='com.adobe.cairngorm.view:ViewHelper/protected:id' type='String' isStatic='false' isConst='false' ><description><![CDATA[
+      The id of the view 
+      ]]></description>
+</field>
+<method name='initialized' fullname='com.adobe.cairngorm.view:ViewHelper/initialized' isStatic='false' isFinal='false' isOverride='false'  param_names='document;id' param_types='Object;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       On initialization, the view is initialized with the <code>ViewLocator</code>
+       with the <code>ViewLocator</code>, using its <code>id</code>.
+       On Event.REMOVED and Event.ADDED events of a view, 
+       the view is registered or unregistered from the <code>ViewLocator</code>.
+       <p>The <code>initialized</code> method is called by the Flex component
+       framework after a component has been initialized, so long as the
+       component implements <code>mx.core.IMXMLObject</code>.</p>
+       ]]></description>
+</method>
+<method name='registerView' fullname='com.adobe.cairngorm.view:ViewHelper/private:registerView' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='flash.events:Event' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Registers the view from the ViewLocator when added to the display list.
+       ]]></description>
+<see><![CDATA[com.adobe.cairngorm.view.ViewLocator
+       ]]></see>
+</method>
+<method name='unregisterView' fullname='com.adobe.cairngorm.view:ViewHelper/private:unregisterView' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='flash.events:Event' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Unregisters the view from the ViewLocator when taken off the display list.
+       ]]></description>
+<see><![CDATA[com.adobe.cairngorm.view.ViewLocator
+       ]]></see>
+</method>
+<classRec name='ViewHelper' fullname='com.adobe.cairngorm.view:ViewHelper' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\view\ViewHelper.as' namespace='com.adobe.cairngorm.view' access='public' baseclass='Object' interfaces='mx.core:IMXMLObject' isFinal='false' isDynamic='false' ><description><![CDATA[
+    <p><strong>Deprecated as of Cairngorm 2.1.</strong></p>
+    
+    Used to isolate command classes from the implementation details of a view.
+    
+    <p>Model-View-Controller (MVC) best practices specify that command classes 
+    should interact with the view using the model (see the ModelLocator class), 
+    but, in some instances, command classes may require to both interrogate and 
+    update the view directly.  Prior to performing any business logic, the command 
+    class may require to fetch values that have been set on the view; following 
+    completion of any business logic, the final task may be for a 
+    command class to update the View (user interface) with any results returned, 
+    or perhaps to switch the View entirely (to a different screen).</p>
+        <p>
+    By encapsulating all the logic necessary for interrogating and
+    updating a particular View into a single helper class, we remove
+    the need for the command classes to have any knowledge about the
+    implementation of the View.  The ViewHelper class decouples our
+    presentation from the control of the application.
+    </p>
+        <p>
+    A ViewHelper belongs to a particular View in the application; when
+    a ViewHelper is created, its id is used to register
+    against a particular View component (such as a particular
+    tab in a TabNavigator, or a particular screen in a ViewStack).  The
+    developer then uses the ViewLocator to locate the particular
+    ViewHelper for interrogation or update of a particular View.
+    </p>
+    
+    ]]></description>
+<see><![CDATA[com.adobe.cairngorm.model.ModelLocator
+    ]]></see>
+<see><![CDATA[com.adobe.cairngorm.view.ViewLocator
+    ]]></see>
+</classRec>
+<field name='__instance' fullname='com.adobe.cairngorm.business:ServiceLocator/protected:__instance' type='com.adobe.cairngorm.business:ServiceLocator' isStatic='true' isConst='false' >
+</field>
+<field name='_httpServices' fullname='com.adobe.cairngorm.business:ServiceLocator/private:_httpServices' type='com.adobe.cairngorm.business:HTTPServices' isStatic='false' isConst='false' >
+</field>
+<field name='_remoteObjects' fullname='com.adobe.cairngorm.business:ServiceLocator/private:_remoteObjects' type='com.adobe.cairngorm.business:RemoteObjects' isStatic='false' isConst='false' >
+</field>
+<field name='_webServices' fullname='com.adobe.cairngorm.business:ServiceLocator/private:_webServices' type='com.adobe.cairngorm.business:WebServices' isStatic='false' isConst='false' >
+</field>
+<method name='getInstance' fullname='com.adobe.cairngorm.business:ServiceLocator/getInstance' isStatic='true' isFinal='false' isOverride='false'  result_type='com.adobe.cairngorm.business:ServiceLocator'><description><![CDATA[
+       Return the ServiceLocator __instance.
+       ]]></description>
+<return><![CDATA[the __instance.
+       ]]></return>
+</method>
+<method name='ServiceLocator' fullname='com.adobe.cairngorm.business:ServiceLocator/ServiceLocator' isStatic='false' isFinal='false' isOverride='false'  result_type='*'>
+</method>
+<method name='getService' fullname='com.adobe.cairngorm.business:ServiceLocator/getService' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceId' param_types='String' param_defaults='undefined' result_type='mx.rpc:AbstractService'><description><![CDATA[
+       <p><strong>Deprecated as of Cairngorm 2.1</strong></p>
+       
+       Returns the service defined for the id, to allow services to be looked up
+       using the ServiceLocator by a canonical name.
+              <p>If no service exists for the service name, an Error will be thrown.</p>
+       ]]></description>
+<param><![CDATA[The id of the service to be returned. This is the id defined in the
+       concrete service locator implementation.
+       ]]></param>
+<metadata>
+
+	<Deprecated owner='com.adobe.cairngorm.business:ServiceLocator/getService' name='You should now use one of the strongly typed methods for returning a service.' >
+
+	</Deprecated>
+</metadata>
+
+</method>
+<method name='getService' fullname='com.adobe.cairngorm.business:ServiceLocator/getService' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceId' param_types='String' param_defaults='undefined' result_type='mx.rpc:AbstractService'>
+<metadata>
+
+	<Deprecated owner='com.adobe.cairngorm.business:ServiceLocator/getService' name='You should now use one of the strongly typed methods for returning a service.' >
+
+	</Deprecated>
+</metadata>
+
+</method>
+<method name='getInvokerService' fullname='com.adobe.cairngorm.business:ServiceLocator/getInvokerService' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceId' param_types='String' param_defaults='undefined' result_type='mx.rpc:AbstractInvoker'><description><![CDATA[
+       <p><strong>Deprecated as of Cairngorm 2.1</strong></p>
+       
+       Returns an AbstractInvoker defined for the id, to allow services to be looked up
+       using the ServiceLocator by a canonical name.
+              <p>If no service exists for the service name, an Error will be thrown.</p>
+       ]]></description>
+<param><![CDATA[The id of the service to be returned. This is the id defined in the
+       concrete service locator implementation.
+       ]]></param>
+<metadata>
+
+	<Deprecated owner='com.adobe.cairngorm.business:ServiceLocator/getInvokerService' name='You should now use one of the strongly typed methods for returning a service.' >
+
+	</Deprecated>
+</metadata>
+
+</method>
+<method name='getInvokerService' fullname='com.adobe.cairngorm.business:ServiceLocator/getInvokerService' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceId' param_types='String' param_defaults='undefined' result_type='mx.rpc:AbstractInvoker'>
+<metadata>
+
+	<Deprecated owner='com.adobe.cairngorm.business:ServiceLocator/getInvokerService' name='You should now use one of the strongly typed methods for returning a service.' >
+
+	</Deprecated>
+</metadata>
+
+</method>
+<method name='getHTTPService' fullname='com.adobe.cairngorm.business:ServiceLocator/getHTTPService' isStatic='false' isFinal='false' isOverride='false'  param_names='name' param_types='String' param_defaults='undefined' result_type='mx.rpc.http:HTTPService'><description><![CDATA[
+       Return the HTTPService for the given name.
+       ]]></description>
+<param><![CDATA[name the name of the HTTPService
+       ]]></param>
+<return><![CDATA[the HTTPService.
+       ]]></return>
+</method>
+<method name='getRemoteObject' fullname='com.adobe.cairngorm.business:ServiceLocator/getRemoteObject' isStatic='false' isFinal='false' isOverride='false'  param_names='name' param_types='String' param_defaults='undefined' result_type='mx.rpc.remoting:RemoteObject'><description><![CDATA[
+       Return the RemoteObject for the given name.
+       ]]></description>
+<param><![CDATA[name the name of the RemoteObject.
+       ]]></param>
+<return><![CDATA[the RemoteObject.
+       ]]></return>
+</method>
+<method name='getWebService' fullname='com.adobe.cairngorm.business:ServiceLocator/getWebService' isStatic='false' isFinal='false' isOverride='false'  param_names='name' param_types='String' param_defaults='undefined' result_type='mx.rpc.soap:WebService'><description><![CDATA[
+       Return the WebService for the given name.
+       ]]></description>
+<param><![CDATA[name the name of the WebService.
+       ]]></param>
+<return><![CDATA[the WebService.
+       ]]></return>
+</method>
+<method name='setCredentials' fullname='com.adobe.cairngorm.business:ServiceLocator/setCredentials' isStatic='false' isFinal='false' isOverride='false'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='setRemoteCredentials' fullname='com.adobe.cairngorm.business:ServiceLocator/setRemoteCredentials' isStatic='false' isFinal='false' isOverride='false'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the remote credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='logout' fullname='com.adobe.cairngorm.business:ServiceLocator/logout' isStatic='false' isFinal='false' isOverride='false'  result_type='void'><description><![CDATA[
+       Logs the user out of all registered services.
+       ]]></description>
+</method>
+<method name='httpServices' fullname='com.adobe.cairngorm.business:ServiceLocator/private:httpServices/get' isStatic='false' isFinal='false' isOverride='false'  result_type='com.adobe.cairngorm.business:HTTPServices'>
+</method>
+<method name='remoteObjects' fullname='com.adobe.cairngorm.business:ServiceLocator/private:remoteObjects/get' isStatic='false' isFinal='false' isOverride='false'  result_type='com.adobe.cairngorm.business:RemoteObjects'>
+</method>
+<method name='webServices' fullname='com.adobe.cairngorm.business:ServiceLocator/private:webServices/get' isStatic='false' isFinal='false' isOverride='false'  result_type='com.adobe.cairngorm.business:WebServices'>
+</method>
+<method name='getServiceForId' fullname='com.adobe.cairngorm.business:ServiceLocator/private:getServiceForId' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceId' param_types='String' param_defaults='undefined' result_type='Object'><description><![CDATA[
+       Return the service with the given id.
+       ]]></description>
+<param><![CDATA[serviceId the id of the service to return.
+       ]]></param>
+<return><![CDATA[the service.
+       ]]></return>
+</method>
+<classRec name='ServiceLocator' fullname='com.adobe.cairngorm.business:ServiceLocator' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\business\ServiceLocator.as' namespace='com.adobe.cairngorm.business' access='public' baseclass='Object' interfaces='com.adobe.cairngorm.business:IServiceLocator' isFinal='false' isDynamic='false' ><description><![CDATA[
+    The ServiceLocator allows service to be located and security
+    credentials to be managed.
+    
+    Although credentials are set against a service they apply to the channel
+    i.e. the set of services belonging to the channel share the same
+    credentials.
+    
+    You must always make sure you call logout at the end of the user's
+    session.
+    ]]></description>
+</classRec>
+<field name='data' fullname='com.adobe.cairngorm.control:CairngormEvent/data' type='' isStatic='false' isConst='false' ><description><![CDATA[
+       The data property can be used to hold information to be passed with the event
+       in cases where the developer does not want to extend the CairngormEvent class.
+       However, it is recommended that specific classes are created for each type
+       of event to be dispatched.
+       ]]></description>
+</field>
+<method name='CairngormEvent' fullname='com.adobe.cairngorm.control:CairngormEvent/CairngormEvent' isStatic='false' isFinal='false' isOverride='false'  param_names='type;bubbles;cancelable' param_types='String;Boolean;Boolean' param_defaults='undefined;false;false' result_type='*'><description><![CDATA[
+       Constructor, takes the event name (type) and data object (defaults to null)
+       and also defaults the standard Flex event properties bubbles and cancelable
+       to true and false respectively.
+       ]]></description>
+</method>
+<method name='dispatch' fullname='com.adobe.cairngorm.control:CairngormEvent/dispatch' isStatic='false' isFinal='false' isOverride='false'  result_type='Boolean'><description><![CDATA[
+       Dispatch this event via the Cairngorm event dispatcher.
+       ]]></description>
+</method>
+<classRec name='CairngormEvent' fullname='com.adobe.cairngorm.control:CairngormEvent' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\control\CairngormEvent.as' namespace='com.adobe.cairngorm.control' access='public' baseclass='flash.events:Event' isFinal='false' isDynamic='false' ><description><![CDATA[
+    The CairngormEvent class is used to differentiate Cairngorm events 
+    from events raised by the underlying Flex framework (or
+    similar). It is mandatory for Cairngorm event dispatching. 
+    
+    <p>For more information on how event dispatching works in Cairngorm, 
+    please check with CairngormEventDispatcher.</p>
+    <p>
+    Events are typically broadcast as the result of a user gesture occuring
+    in the application, such as a button click, a menu selection, a double
+    click, a drag and drop operation, etc.  
+    </p>
+        ]]></description>
+<see><![CDATA[com.adobe.cairngorm.control.CairngormEventDispatcher
+    ]]></see>
+</classRec>
+<method name='addSubController' fullname='com.universalmind.cairngorm.control:FrontController/addSubController' isStatic='false' isFinal='false' isOverride='false'  param_names='controllerRef' param_types='Class' param_defaults='undefined' result_type='void'><description><![CDATA[
+        This method allows classes of subControllers to be registered and instantiated
+        Events registered with the subcontroller are "added" to the global event->command
+        mappings. Events for subControllers are simply "forwarded" to that subController's
+        event-mapping processor.
+        
+        ]]></description>
+<controllerRef><![CDATA[This is the class name of module controller that should be 
+        instantiated and cached.
+        
+        ]]></controllerRef>
+<see><![CDATA[com.universalmind.cairngorm.control.ModuleController 
+        ]]></see>
+</method>
+<method name='checkModuleType' fullname='com.universalmind.cairngorm.control:FrontController/private:checkModuleType' isStatic='false' isFinal='false' isOverride='false'  param_names='subController' param_types='' param_defaults='undefined' result_type='Boolean'><description><![CDATA[
+        This method checks the runtime type of the sub-controller.
+        If not a subclass of ModuleController, then an error is thrown.
+        
+        ]]></description>
+<subController><![CDATA[This is an instance of a class that "should be" a sub-Controller
+        ]]></subController>
+</method>
+<method name='isControllerRegistered' fullname='com.universalmind.cairngorm.control:FrontController/private:isControllerRegistered' isStatic='false' isFinal='false' isOverride='false'  param_names='controllerRef' param_types='Class' param_defaults='undefined' result_type='Boolean'><description><![CDATA[
+        This function performs a pre-instantiation check of registration for the
+        subcontroller. SubControllers can only be registered 1x.
+        
+        ]]></description>
+<controllerRef><![CDATA[The class of the subcontroller that we are preparing to
+        instantiate
+        ]]></controllerRef>
+</method>
+<field name='__subControllers' fullname='com.universalmind.cairngorm.control:FrontController/private:__subControllers' type='flash.utils:Dictionary' isStatic='false' isConst='false' defaultValue='' ><description><![CDATA[ Internal cache for all subControllers instantiated and registered ]]></description>
+</field>
+<classRec name='FrontController' fullname='com.universalmind.cairngorm.control:FrontController' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\control\FrontController.as' namespace='com.universalmind.cairngorm.control' access='public' baseclass='com.universalmind.cairngorm.control:BaseController' isFinal='false' isDynamic='false' ><description><![CDATA[
+     The UniversalMind FrontController is used as a "super"
+     cairngorm controller to allow modules to register their own sub-controllers
+     as part of the application set.
+     
+     <p>
+     Often applications are developed with distinct modules (dynamically loaded
+     or static compiled). These modules may contain their own mini-Cairngorm MVC
+     but need to be used with the scope of an application MVC; used without namespace
+     conflicts or overrides.
+     </p>
+     
+     <p>
+     Each subcontroller maps its own events to its own commands. This allows modules 
+     sub-MVCs to be "plugged" into other applications easily.
+     </p>
+     
+     <pre>
+               import com.clientX.sales.control.SalesController;
+          import com.clientX.accounts.control.AccountsController;
+      
+          public class ClientXController extends FrontController {
+            
+              public function SalesController() {
+                 registerClientXEvents();
+                 registerModules();
+              }
+     
+              private function registerClientXEvents():void {
+                   addCommand(LoginUserEvent.EVENT_ID,     LoginCommand);
+                   addCommand(RegisterUserEvent.EVENT_ID,  RegistrationCommand);
+              }
+     
+              private function registerModuleEvents():void {
+                  addSubController(SalesController);
+                  addSubController(AccountsController);
+              }
+          }
+     
+     </pre>
+     
+     ]]></description>
+<see><![CDATA[com.universalmind.cairngorm.control.ModuleController
+     ]]></see>
+</classRec>
+<method name='registeredEvents' fullname='com.universalmind.cairngorm.control:ModuleController/registeredEvents/get' isStatic='false' isFinal='false' isOverride='false'  result_type='Array'><description><![CDATA[
+      This method allows FrontControllers to easily access events that have
+      been already registered with the ModuleController [aka subController].
+      
+      <p>
+      Note: this assumes that all events have been registered by the
+      ModuleController constructor. Events registered "later" will NOT
+      be added to the FrontController global registry.
+      </p>
+      
+      ]]></description>
+<see><![CDATA[com.universalmind.cairngorm.control.FrontController
+      ]]></see>
+</method>
+<method name='eventHandler' fullname='com.universalmind.cairngorm.control:ModuleController/eventHandler/get' isStatic='false' isFinal='false' isOverride='false'  result_type='Function'><description><![CDATA[
+     This method exposes the ModuleController event processor to the
+     FrontController so this subcontrollers events can be processed properly
+     by "this" controllers commands
+     
+     ]]></description>
+<see><![CDATA[com.universalmind.cairngorm.control.FrontController
+     ]]></see>
+</method>
+<classRec name='ModuleController' fullname='com.universalmind.cairngorm.control:ModuleController' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\control\ModuleController.as' namespace='com.universalmind.cairngorm.control' access='public' baseclass='com.universalmind.cairngorm.control:BaseController' isFinal='false' isDynamic='false' ><description><![CDATA[
+     This ModuleController allows mini-MVC frameworks to be registered and used
+     as part of applications MVC framework.
+     
+     <p>
+     Often applications are developed with distinct modules (dynamically loaded
+     or static compiled). These modules may contain their own mini-Cairngorm MVC
+     but need to be used with the scope of an application MVC; used without namespace
+     conflicts or overrides.
+     </p>
+     
+     <p>
+     Each subcontroller maps its own events to its own commands. This allows modules 
+     sub-MVCs to be "plugged" into other applications easily. Note that all subController
+     events must be registered during construction.
+     </p>
+     
+     <pre>
+     
+          public class SalesController extends ModuleController {
+            
+              public function SalesController() {
+                 registerModuleEvents();
+              }
+     
+              private function registerModuleEvents():void {
+                  addCommand(GetSalesByRegionEvent.EVENT_ID, SalesCommand);
+                  addCommand(GetAllSalesEvent.EVENT_ID,      SalesCommand);
+                 
+                  addCommand(RequestRefundEvent.EVENT_ID,    RefundCommand);
+              }
+          }
+     
+     </pre>
+     
+     ]]></description>
+</classRec>
+<field name='services' fullname='com.adobe.cairngorm.business:RemoteObjects/private:services' type='flash.utils:Dictionary' isStatic='false' isConst='false' defaultValue='' >
+</field>
+<method name='register' fullname='com.adobe.cairngorm.business:RemoteObjects/register' isStatic='false' isFinal='false' isOverride='true'  param_names='serviceLocator' param_types='com.adobe.cairngorm.business:IServiceLocator' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Register the services.
+       ]]></description>
+<param><![CDATA[serviceLocator the IServiceLocator instance.
+       ]]></param>
+</method>
+<method name='getService' fullname='com.adobe.cairngorm.business:RemoteObjects/getService' isStatic='false' isFinal='false' isOverride='true'  param_names='name' param_types='String' param_defaults='undefined' result_type='Object'><description><![CDATA[
+       Return the service with the given name.
+       ]]></description>
+<param><![CDATA[name the name of the service.
+       ]]></param>
+<return><![CDATA[the service.
+       ]]></return>
+</method>
+<method name='setCredentials' fullname='com.adobe.cairngorm.business:RemoteObjects/setCredentials' isStatic='false' isFinal='false' isOverride='true'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='setRemoteCredentials' fullname='com.adobe.cairngorm.business:RemoteObjects/setRemoteCredentials' isStatic='false' isFinal='false' isOverride='true'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the remote credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='logout' fullname='com.adobe.cairngorm.business:RemoteObjects/logout' isStatic='false' isFinal='false' isOverride='true'  result_type='void'><description><![CDATA[
+       Log the user out of all registered services.
+       ]]></description>
+</method>
+<classRec name='RemoteObjects' fullname='com.adobe.cairngorm.business:RemoteObjects' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\business\RemoteObjects.as' namespace='com.adobe.cairngorm.business' access='internal' baseclass='com.adobe.cairngorm.business:AbstractServices' isFinal='false' isDynamic='false' ><description><![CDATA[
+    Used to manage all RemoteObject's defined on the IServiceLocator instance.
+    ]]></description>
+</classRec>
+<field name='services' fullname='com.adobe.cairngorm.business:HTTPServices/private:services' type='flash.utils:Dictionary' isStatic='false' isConst='false' defaultValue='' >
+</field>
+<method name='register' fullname='com.adobe.cairngorm.business:HTTPServices/register' isStatic='false' isFinal='false' isOverride='true'  param_names='serviceLocator' param_types='com.adobe.cairngorm.business:IServiceLocator' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Register the services.
+       ]]></description>
+<param><![CDATA[serviceLocator the IServiceLocator instance.
+       ]]></param>
+</method>
+<method name='getService' fullname='com.adobe.cairngorm.business:HTTPServices/getService' isStatic='false' isFinal='false' isOverride='true'  param_names='name' param_types='String' param_defaults='undefined' result_type='Object'><description><![CDATA[
+       Return the service with the given name.
+       ]]></description>
+<param><![CDATA[name the name of the service.
+       ]]></param>
+<return><![CDATA[the service.
+       ]]></return>
+</method>
+<method name='setCredentials' fullname='com.adobe.cairngorm.business:HTTPServices/setCredentials' isStatic='false' isFinal='false' isOverride='true'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='setRemoteCredentials' fullname='com.adobe.cairngorm.business:HTTPServices/setRemoteCredentials' isStatic='false' isFinal='false' isOverride='true'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the remote credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='logout' fullname='com.adobe.cairngorm.business:HTTPServices/logout' isStatic='false' isFinal='false' isOverride='true'  result_type='void'><description><![CDATA[
+       Log the user out of all registered services.
+       ]]></description>
+</method>
+<classRec name='HTTPServices' fullname='com.adobe.cairngorm.business:HTTPServices' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\business\HTTPServices.as' namespace='com.adobe.cairngorm.business' access='internal' baseclass='com.adobe.cairngorm.business:AbstractServices' isFinal='false' isDynamic='false' ><description><![CDATA[
+    Used to manage all HTTPService's defined on the IServiceLocator instance.
+    ]]></description>
+</classRec>
+<field name='services' fullname='com.adobe.cairngorm.business:WebServices/private:services' type='flash.utils:Dictionary' isStatic='false' isConst='false' defaultValue='' >
+</field>
+<method name='register' fullname='com.adobe.cairngorm.business:WebServices/register' isStatic='false' isFinal='false' isOverride='true'  param_names='serviceLocator' param_types='com.adobe.cairngorm.business:IServiceLocator' param_defaults='undefined' result_type='void'><description><![CDATA[
+       Register the services.
+       ]]></description>
+<param><![CDATA[serviceLocator the IServiceLocator instance.
+       ]]></param>
+</method>
+<method name='getService' fullname='com.adobe.cairngorm.business:WebServices/getService' isStatic='false' isFinal='false' isOverride='true'  param_names='name' param_types='String' param_defaults='undefined' result_type='Object'><description><![CDATA[
+       Return the service with the given name.
+       ]]></description>
+<param><![CDATA[name the name of the service.
+       ]]></param>
+<return><![CDATA[the service.
+       ]]></return>
+</method>
+<method name='setCredentials' fullname='com.adobe.cairngorm.business:WebServices/setCredentials' isStatic='false' isFinal='false' isOverride='true'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='setRemoteCredentials' fullname='com.adobe.cairngorm.business:WebServices/setRemoteCredentials' isStatic='false' isFinal='false' isOverride='true'  param_names='username;password' param_types='String;String' param_defaults='undefined;undefined' result_type='void'><description><![CDATA[
+       Set the remote credentials for all registered services.
+       ]]></description>
+<param><![CDATA[username the username to set.
+       ]]></param>
+<param><![CDATA[password the password to set.
+       ]]></param>
+</method>
+<method name='logout' fullname='com.adobe.cairngorm.business:WebServices/logout' isStatic='false' isFinal='false' isOverride='true'  result_type='void'><description><![CDATA[
+       Log the user out of all registered services.
+       ]]></description>
+</method>
+<classRec name='WebServices' fullname='com.adobe.cairngorm.business:WebServices' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\adobe\cairngorm\business\WebServices.as' namespace='com.adobe.cairngorm.business' access='internal' baseclass='com.adobe.cairngorm.business:AbstractServices' isFinal='false' isDynamic='false' ><description><![CDATA[
+    Used to manage all WebService's defined on the IServiceLocator instance.
+    ]]></description>
+</classRec>
+<field name='local' fullname='com.universalmind.cairngorm.business:ServiceLocator/local' type='Boolean' isStatic='false' isConst='false' defaultValue='false' ><description><![CDATA[
+          Variable to all switch between remote data services and local files
+          ]]></description>
+</field>
+<field name='urlDetails' fullname='com.universalmind.cairngorm.business:ServiceLocator/urlDetails' type='Array' isStatic='false' isConst='false' defaultValue='unknown' ><description><![CDATA[
+          Cross-reference table of serviceName, local URL, and remote URL
+          ]]></description>
+</field>
+<method name='getInstance' fullname='com.universalmind.cairngorm.business:ServiceLocator/getInstance' isStatic='true' isFinal='false' isOverride='false'  result_type='com.adobe.cairngorm.business:ServiceLocator'><description><![CDATA[
+         Return the ServiceLocator __instance.
+         
+         ]]></description>
+<return><![CDATA[the instance of com.universalmind.cairngorm.business.ServiceLocator. 
+         Note: this should be an instantiation of com.universalmind.cairngorm.business.ServiceLocator
+         ]]></return>
+</method>
+<method name='updateServiceURLs' fullname='com.universalmind.cairngorm.business:ServiceLocator/updateServiceURLs' isStatic='false' isFinal='false' isOverride='false'  param_names='urlDetails' param_types='Array' param_defaults='undefined' result_type='void'><description><![CDATA[
+          Method to initialize services with cross-reference URL table.
+          This allows services to be initialized based on a runtime loaded configuration file.
+           
+          <pre>
+               urlDetails = [
+                              {serviceName, localURL, remoteURL},
+                              {serviceName, localURL, remoteURL}
+                            ];
+          <pre> 
+                    ]]></description>
+<urlDetails><![CDATA[This the array of init objects
+          ]]></urlDetails>
+</method>
+<method name='findServiceByName' fullname='com.universalmind.cairngorm.business:ServiceLocator/findServiceByName' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceName;throwError' param_types='String;Boolean' param_defaults='undefined;true' result_type='*'><description><![CDATA[
+          Utility method to get reference to any service instance based on the service name/id.
+          
+          ]]></description>
+<serviceName><![CDATA[The service name/id specified when the service was instantiated. Note the service type is
+          irrelevant. Using the service name/id a RemoteObject, WebService, or HTTPService instance can be returned.
+                    ]]></serviceName>
+<throws><![CDATA[If the service was not found, an error may be thrown.
+          ]]></throws>
+</method>
+<method name='lookupServiceURL' fullname='com.universalmind.cairngorm.business:ServiceLocator/private:lookupServiceURL' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceID' param_types='String' param_defaults='undefined' result_type='String'>
+</method>
+<method name='lookupServiceWSDL' fullname='com.universalmind.cairngorm.business:ServiceLocator/private:lookupServiceWSDL' isStatic='false' isFinal='false' isOverride='false'  param_names='serviceID' param_types='String' param_defaults='undefined' result_type='String'>
+</method>
+<method name='onWSDL_LoadError' fullname='com.universalmind.cairngorm.business:ServiceLocator/private:onWSDL_LoadError' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='mx.rpc.events:FaultEvent' param_defaults='undefined' result_type='void'><description><![CDATA[
+         When a WebService URL is set, the WSDL is reloaded, this method provides an fault handler
+         if the WSDL could not be loaded or the call issued a timeout.
+         
+         ]]></description>
+<event><![CDATA[The FaultEvent that provides details why the WebService could not be initialized.
+         
+         ]]></event>
+<private><![CDATA[         ]]></private>
+</method>
+<method name='onWSDL_Loaded' fullname='com.universalmind.cairngorm.business:ServiceLocator/private:onWSDL_Loaded' isStatic='false' isFinal='false' isOverride='false'  param_names='event' param_types='mx.rpc.events:ResultEvent' param_defaults='undefined' result_type='void'><description><![CDATA[
+         When a WebService URL is set, the WSDL is reloaded, this method provides an result handler
+         used to reset future timeouts to 300 ms.
+         
+         ]]></description>
+<event><![CDATA[The ResultEvent that provides details about the WSDL load request
+         
+         ]]></event>
+<private><![CDATA[         ]]></private>
+</method>
+<classRec name='ServiceLocator' fullname='com.universalmind.cairngorm.business:ServiceLocator' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\business\ServiceLocator.as' namespace='com.universalmind.cairngorm.business' access='public' baseclass='com.adobe.cairngorm.business:ServiceLocator' isFinal='false' isDynamic='false' ><description><![CDATA[
+    This ServiceLocator provides two methods in addition to the standard adobe.cairngorm...ServiceLocator:
+    updateServiceURLs() and findServiceByName(). 
+    
+    <p>
+    
+    A ServiceLocator is still intended to be subclassed by a Services.mxml class... and it is that class
+    that is mxml tag instantiated in the <mx:Application /> class. The ServiceLocator is intended to provide
+    easy access to HTTPService, WebService, and RemoteObject instances using IDs. The Universal Mind ServiceLocator
+    also provides an easy way to update 1 or more service instances with URLs strings that are loaded at runtime.
+    <br/><br/>
+    
+    </p>
+    
+    ]]></description>
+<example><![CDATA[Consider the code (Services.mxml) below that demonstrates the intended manner in which the ServiceLocator is subclassed:  
+    <pre> 
+      
+      &lt;?xml version="1.0" encoding="utf-8"?&gt;
+      &lt;service:ServiceLocator xmlns:mx="http://www.adobe.com/2006/mxml" 
+                            xmlns:service="com.universalmind.cairngorm.business. &gt;
+    
+           &lt;mx:HTTPService id="loginService"  url="https://trail.clientX.com/login.do" 
+                                                 resultFormat="e4x" useProxy="false" /&gt;
+    
+            &lt;mx:RemoteObject id="ratingService" destination="clientXRatingServices"&gt;
+                  &lt;mx:method name="getRatingsByDate" makeObjectsBindable="true" /&gt;
+            &lt;/mx:RemoteObject&gt;
+    
+      &lt;/service:ServiceLocator&gt;
+    </pre>
+    
+    ]]></example>
+<see><![CDATA[com.adobe.cairngorm.business.ServiceLocator
+    ]]></see>
+</classRec>
+<field name='callbacks' fullname='com.universalmind.cairngorm.events:UMEvent/callbacks' type='com.universalmind.cairngorm.events:Callbacks' isStatic='false' isConst='false' defaultValue='null' ><description><![CDATA[
+        The data property can be used to hold information to be passed with the event
+        in cases where the developer does not want to extend the UMEvent class.
+        However, it is recommended that specific classes are created for each type
+        of event to be dispatched.
+        ]]></description>
+</field>
+<method name='UMEvent' fullname='com.universalmind.cairngorm.events:UMEvent/UMEvent' isStatic='false' isFinal='false' isOverride='false'  param_names='eventType;handlers;bubbles;cancelable;data' param_types='String;com.universalmind.cairngorm.events:Callbacks;Boolean;Boolean;' param_defaults='com.universalmind.cairngorm.events.UMEvent;null;true;false;null' result_type='*'><description><![CDATA[
+        Constructor, takes the event name (type), Responder proxy to allow caller to be notified,
+        data object (defaults to null), and also defaults the standard Flex event properties bubbles and cancelable
+        to true and false respectively.
+        
+        ]]></description>
+<param><![CDATA[eventType  This is the signature or type of event
+        ]]></param>
+<param><![CDATA[handlers   This is the "responder" proxy that allows notifications/callbacks to the original caller
+        ]]></param>
+<param><![CDATA[bubbles    This flag indicates if the event should "bubble". [default = true]
+        ]]></param>
+<param><![CDATA[cancelable This flag indicates if the event can be cancelled. [default = false]
+        ]]></param>
+<parma><![CDATA[data       This is the optional data object that can be packaged with the event without creating an event subclass
+        ]]></parma>
+</method>
+<method name='clone' fullname='com.universalmind.cairngorm.events:UMEvent/clone' isStatic='false' isFinal='false' isOverride='true'  result_type='flash.events:Event'><description><![CDATA[
+     Per Adobe Flex recommendations all events should support a clone() operation for bubbling and dispatching purposes
+     
+     ]]></description>
+</method>
+<method name='copyFrom' fullname='com.universalmind.cairngorm.events:UMEvent/copyFrom' isStatic='false' isFinal='false' isOverride='false'  param_names='src' param_types='flash.events:Event' param_defaults='undefined' result_type='flash.events:Event'><description><![CDATA[
+     Utility method to allow quick initialization of an event based on current settings from another event. 
+     Also used to implement the clone() method functionality
+     
+     ]]></description>
+<param><![CDATA[src The event from which current settings and references should be copied.
+     ]]></param>
+</method>
+<method name='dispatch' fullname='com.universalmind.cairngorm.events:UMEvent/dispatch' isStatic='false' isFinal='false' isOverride='true'  result_type='Boolean'><description><![CDATA[
+       <p><strong>Deprecated, Do not use! The default UMEvent bubbling and FrontController event hooks obviate this method.</strong></p>
+       This method also completely distorts the event structures within Flex... no other events in Flex can dispatch themselves.
+       Events are "announcements" with optional data packaged in the announcement. Events are passive. NOT active.
+        
+       Dispatch this event via the Cairngorm event dispatcher.
+       ]]></description>
+</method>
+<classRec name='UMEvent' fullname='com.universalmind.cairngorm.events:UMEvent' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\events\UMEvent.as' namespace='com.universalmind.cairngorm.events' access='public' baseclass='com.adobe.cairngorm.control:CairngormEvent' interfaces='com.universalmind.cairngorm.events:IUMEvent' isFinal='false' isDynamic='false' ><description><![CDATA[
+    The UMEvent class is used to differentiate Cairngorm events 
+    from events raised by the underlying Flex framework (or even the standard CairngormEvent)
+    It is mandatory to use UMEvent for dispatching to Commands. Commands
+    understand and "use" the optional "handlers" responder within the event 
+    
+    <p>For more information on how event dispatching works in Cairngorm, 
+    please check with CairngormEventDispatcher.</p>
+        <p>For more information on how event dispatching works uniquely with Commands, 
+    please check with Command.</p>
+        <p>
+    Events are typically broadcast as the result of a user gesture occuring
+    in the application, such as a button click, a menu selection, a double
+    click, a drag and drop operation, etc.  
+    </p>
+        ]]></description>
+<see><![CDATA[com.universalmind.cairngorm.controller.CairngormEventDispatcher
+    ]]></see>
+<see><![CDATA[com.universalmind.cairngorm.commands.Command
+    ]]></see>
+</classRec>
+<field name='EVENT_ID' fullname='com.universalmind.cairngorm.events:AnnounceFaultEvent/EVENT_ID' type='String' isStatic='true' isConst='true' defaultValue='announceFaultEvent' >
+</field>
+<field name='fault' fullname='com.universalmind.cairngorm.events:AnnounceFaultEvent/fault' type='mx.rpc:Fault' isStatic='false' isConst='false' defaultValue='null' ><description><![CDATA[
+        The fault data that was generated during an asynchronous response or manually.
+        ]]></description>
+</field>
+<method name='AnnounceFaultEvent' fullname='com.universalmind.cairngorm.events:AnnounceFaultEvent/AnnounceFaultEvent' isStatic='false' isFinal='false' isOverride='false'  param_names='fault' param_types='mx.rpc:Fault' param_defaults='undefined' result_type='*'><description><![CDATA[
+        Constructor, takes the fault data that should be deliver with the event
+        
+        ]]></description>
+<param><![CDATA[fault  This is the actual Fault instance [usually generated by an asynchronous response FaultEvent]
+        ]]></param>
+</method>
+<method name='clone' fullname='com.universalmind.cairngorm.events:AnnounceFaultEvent/clone' isStatic='false' isFinal='false' isOverride='true'  result_type='flash.events:Event'><description><![CDATA[
+     Per Adobe Flex recommendations all events should support a clone() operation for bubbling and dispatching purposes
+     
+     ]]></description>
+</method>
+<method name='copyFrom' fullname='com.universalmind.cairngorm.events:AnnounceFaultEvent/copyFrom' isStatic='false' isFinal='false' isOverride='true'  param_names='src' param_types='flash.events:Event' param_defaults='undefined' result_type='flash.events:Event'><description><![CDATA[
+     Utility method to allow quick initialization of an event based on current settings from another event. 
+     Also used to implement the clone() method functionality
+     
+     ]]></description>
+<param><![CDATA[src The event from which current settings and references should be copied.
+     ]]></param>
+</method>
+<classRec name='AnnounceFaultEvent' fullname='com.universalmind.cairngorm.events:AnnounceFaultEvent' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\events\AnnounceFaultEvent.as' namespace='com.universalmind.cairngorm.events' access='public' baseclass='com.universalmind.cairngorm.events:UMEvent' isFinal='false' isDynamic='false' ><description><![CDATA[
+    The UMEvent class is used to differentiate Cairngorm events 
+    from events raised by the underlying Flex framework (or even the standard CairngormEvent)
+    It is mandatory to use UMEvent for dispatching to Commands. Commands
+    understand and "use" the optional "handlers" responder within the event 
+    
+    <p>For more information on how event dispatching works in Cairngorm, 
+    please check with CairngormEventDispatcher.</p>
+        <p>For more information on how event dispatching works uniquely with Commands, 
+    please check with Command.</p>
+        <p>
+    Events are typically broadcast as the result of a user gesture occuring
+    in the application, such as a button click, a menu selection, a double
+    click, a drag and drop operation, etc.  
+    </p>
+        ]]></description>
+<see><![CDATA[com.universalmind.cairngorm.controller.CairngormEventDispatcher
+    ]]></see>
+<see><![CDATA[com.universalmind.cairngorm.commands.Command
+    ]]></see>
+</classRec>
+<field name='TRIGGER_SEQUENCE' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/TRIGGER_SEQUENCE' type='String' isStatic='true' isConst='true' defaultValue='sequence' >
+</field>
+<field name='TRIGGER_PARALLEL' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/TRIGGER_PARALLEL' type='String' isStatic='true' isConst='true' defaultValue='parallel' >
+</field>
+<field name='trigger' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/trigger' type='String' isStatic='false' isConst='false' defaultValue='sequence' >
+</field>
+<field name='failCount' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/failCount' type='int' isStatic='false' isConst='false' defaultValue='-1' >
+</field>
+<method name='EventGenerator' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/EventGenerator' isStatic='false' isFinal='false' isOverride='false'  param_names='eventsToFire;handlers;failCount;triggerType' param_types='Array;com.universalmind.cairngorm.events:Callbacks;int;String' param_defaults='null;null;-1;unknown' result_type='*'>
+</method>
+<method name='dispatch' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/dispatch' isStatic='false' isFinal='false' isOverride='false'  param_names='handlers' param_types='com.universalmind.cairngorm.events:Callbacks' param_defaults='null' result_type='void'>
+</method>
+<method name='events' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/events/set' isStatic='false' isFinal='false' isOverride='false'  param_names='eventsToFire' param_types='Array' param_defaults='undefined' result_type='void'>
+</method>
+<method name='dispatchNext' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:dispatchNext' isStatic='false' isFinal='false' isOverride='false'  result_type='void'>
+</method>
+<method name='onEventFail' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:onEventFail' isStatic='false' isFinal='false' isOverride='false'  param_names='response' param_types='' param_defaults='undefined' result_type='void'>
+</method>
+<method name='onEventDone' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:onEventDone' isStatic='false' isFinal='false' isOverride='false'  param_names='response' param_types='' param_defaults='undefined' result_type='void'>
+</method>
+<method name='announceDone' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:announceDone' isStatic='false' isFinal='false' isOverride='false'  param_names='response' param_types='' param_defaults='null' result_type='void'>
+</method>
+<method name='announceFail' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:announceFail' isStatic='false' isFinal='false' isOverride='false'  param_names='response' param_types='' param_defaults='null' result_type='Boolean'>
+</method>
+<method name='clearCache' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:clearCache' isStatic='false' isFinal='false' isOverride='false'  result_type='void'>
+</method>
+<method name='buildCache' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:buildCache' isStatic='false' isFinal='false' isOverride='false'  param_names='eventsToFire' param_types='Array' param_defaults='undefined' result_type='void'>
+</method>
+<method name='resetCache' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:resetCache' isStatic='false' isFinal='false' isOverride='false'  result_type='void'>
+</method>
+<method name='getNext' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:getNext' isStatic='false' isFinal='false' isOverride='false'  result_type='*'>
+</method>
+<method name='hasNext' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:hasNext' isStatic='false' isFinal='false' isOverride='false'  result_type='Boolean'>
+</method>
+<method name='hasBeenDispatched' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:hasBeenDispatched' isStatic='false' isFinal='false' isOverride='false'  param_names='key' param_types='' param_defaults='undefined' result_type='Boolean'>
+</method>
+<method name='markAsDispatched' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:markAsDispatched' isStatic='false' isFinal='false' isOverride='false'  param_names='key' param_types='' param_defaults='undefined' result_type='void'>
+</method>
+<field name='__numOfFails' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:__numOfFails' type='int' isStatic='false' isConst='false' defaultValue='0' >
+</field>
+<field name='__doneCounter' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:__doneCounter' type='int' isStatic='false' isConst='false' defaultValue='0' >
+</field>
+<field name='__sequence' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:__sequence' type='Array' isStatic='false' isConst='false' defaultValue='' >
+</field>
+<field name='__events' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:__events' type='flash.utils:Dictionary' isStatic='false' isConst='false' defaultValue='' >
+</field>
+<field name='__announcer' fullname='com.universalmind.cairngorm.events.generator:EventGenerator/private:__announcer' type='com.universalmind.cairngorm.events:Callbacks' isStatic='false' isConst='false' defaultValue='null' >
+</field>
+<classRec name='EventGenerator' fullname='com.universalmind.cairngorm.events.generator:EventGenerator' sourcefile='E:\projects\UniversalMind\Cairngorm\src\com\universalmind\cairngorm\events\generator\EventGenerator.as' namespace='com.universalmind.cairngorm.events.generator' access='public' baseclass='mx.core:UIComponent' interfaces='com.universalmind.cairngorm.events.generator:IEventGenerator' isFinal='false' isDynamic='false' >
+<metadata>
+
+	<DefaultProperty owner='com.universalmind.cairngorm.events.generator:EventGenerator' name='events' >
+
+	</DefaultProperty>
+</metadata>
+
+<metadata>
+
+	<Event owner='com.universalmind.cairngorm.events.generator:EventGenerator' name='result' type='flash.events.Event' >
+
+	</Event>
+</metadata>
+
+<metadata>
+
+	<Event owner='com.universalmind.cairngorm.events.generator:EventGenerator' name='fault' type='flash.events.Event' >
+
+	</Event>
+</metadata>
+
+</classRec>
+</asdoc>
