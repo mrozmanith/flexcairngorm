@@ -27,9 +27,11 @@ package com.universalmind.cairngorm.control
 {
    import com.adobe.cairngorm.control.CairngormEvent;
    import com.adobe.cairngorm.control.CairngormEventDispatcher;
-   import com.universalmind.cairngorm.events.UMEvent;
+   import com.adobe.cairngorm.commands.ICommand;
    
    import flash.events.Event;
+   import flash.utils.describeType;
+   import flash.utils.getQualifiedClassName;
    
    import mx.core.UIComponent;
    import mx.core.mx_internal;
@@ -58,6 +60,26 @@ package com.universalmind.cairngorm.control
      */
    public class BaseController extends com.adobe.cairngorm.control.FrontController
    {
+
+	      /**
+	        * This function provides extra runtime type checking of Command class argument: commandRef 
+	        * This argument must not be null and must support the ICommand interface.
+	        * After these checks, the request is forwarded to the Adobe FrontController 
+	        */
+		  override public function addCommand( commandName : String, commandRef : Class, useWeakReference : Boolean = true ) : void {
+
+			// Provide runtime checking to confirm the commandRef is non-null and implements ICommand 
+			if (null == commandRef) throw new Error("The commandRef argument cannot be null");
+			else {
+				var classDescription:XML = describeType(commandRef) as XML;
+				
+				var clazzName         : String = getQualifiedClassName(ICommand);
+				var implementsICommand:Boolean = (classDescription.factory.implementsInterface.(@type == clazzName).length() != 0);
+				if (!implementsICommand) throw new Error("The commandRef argument '" + commandRef + "' must implement the ICommand interface");
+			  }
+
+			super.addCommand(commandName, commandRef, useWeakReference);
+		  }
 
 	      /**
 	        * This function allows FrontController subclasses to easily register new 
