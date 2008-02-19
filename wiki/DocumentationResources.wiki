@@ -3,7 +3,7 @@
 
 = Cairngorm Documentation and PDFs =
 
-Below is a list of documentation resources for the UniversalMind Cairngorm extensions.
+Below is a list of documentation resources for the !UniversalMind Cairngorm extensions.
 ----
 
   * [http://flexcairngorm.googlecode.com/svn/trunk/docs/EventBubbling%20&%20Cairngorm.pdf Event Dispatching & Cairngorm]
