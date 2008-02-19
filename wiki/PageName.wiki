@@ -1,0 +1,10 @@
+#summary Links to Documentation PDFs
+#labels Featured,Phase-Implementation,Phase-Design
+
+= Cairngorm Documentation and PDFs =
+
+Below is a list of documentation resources for the UniversalMind Cairngorm extensions.
+----
+
+  * [http://flexcairngorm.googlecode.com/svn/trunk/docs/EventBubbling%20&%20Cairngorm.pdf Event Dispatching & Cairngorm]
+  * [http://flexcairngorm.googlecode.com/svn/trunk/docs/FlexCairngorm%20Continuous%20Testing.pdf Cairngorm & Continuous Testing]
