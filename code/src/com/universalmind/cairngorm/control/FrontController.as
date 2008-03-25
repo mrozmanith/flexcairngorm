@@ -19,6 +19,7 @@ Mind and its customer, this code is provided "as-is" without warranty of
 any kind.
 
 Author: Thomas Burleson, Principal Architect
+        Darron Schall,   Principal Architect
         ThomasB@UniversalMind.com
 @ignore
 */

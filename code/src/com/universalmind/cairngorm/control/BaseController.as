@@ -107,6 +107,7 @@ package com.universalmind.cairngorm.control
     		 * needs separate event dispatching code for Cairngorm events.
     		 * The event is still dispatched normally but ALSO gets sent to the CairngormEventDispatcher
     		 */
+    		[Deprecated("CairngormEvents should now self dispatch. Event hooks or event bubbling should not be used!")]
     		private static function hookDispatchEvent():Boolean
     		{
     		    use namespace mx_internal;
@@ -129,8 +130,11 @@ package com.universalmind.cairngorm.control
     		  	}
     		}
     
-      	  /** Create the dispatch event hook when the Application is created. */
-    	  private static var __dispatchEventHooked : Boolean                  = hookDispatchEvent();
+      	  /** 
+      	  * The dispatch event hook when the Application is created. 
+      	  * Note: This feature has been disabled! 
+      	  **/
+    	  private static var __dispatchEventHooked : Boolean                  = false; // hookDispatchEvent();
     	  
     	  /** Maintain a reference to prevent garbage collection. Also shortcut alias */
     	  private static var ___dispatcher         : CairngormEventDispatcher = CairngormEventDispatcher.getInstance();
