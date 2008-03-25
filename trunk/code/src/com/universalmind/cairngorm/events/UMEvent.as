@@ -97,6 +97,8 @@ package com.universalmind.cairngorm.events
 			  * Also used to implement the clone() method functionality
 			  * 
 			  * @param src The event from which current settings and references should be copied.
+			  * 
+			  * 
 			  */
 			public function copyFrom(src : Event):Event {					
 				// Note: can change/specify the values of type,bubbles,etc...
@@ -111,7 +113,8 @@ package com.universalmind.cairngorm.events
 			
 	 
 		 /**
-       * <p><strong>Deprecated, Do not use! The default UMEvent bubbling and FrontController event hooks obviate this method.</strong></p>
+		 * This is the recommended method to dipsatch business events directly to the business layer(s).
+       * <p><strong>Event hooks or event bubbling solutions are not recommended and have been deprecated</strong></p>
        * This method also completely distorts the event structures within Flex... no other events in Flex can dispatch themselves.
        * Events are "announcements" with optional data packaged in the announcement. Events are passive. NOT active.
        *  
