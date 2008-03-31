@@ -33,6 +33,6 @@ Developers will notice that the runtime !UI has not changed at all. Only the cod
 || Version || Download || SVN Link ||
 || !FlexStore (original) || || ||
 || !FlexStore (w/ Cairngorm MVC) || || ||
-|| !FlexStore (w/ Cairngorm MVC and UM Extensions) || || ||
+|| !FlexStore (w/ Cairngorm MVC and UM Extensions) || _pending_ || _pending_ ||
 
-Note: the above !FlexStore links include the FlexBuilder project files. These project files require !FlexBuilder 3 and include the Cairngorm 2.2.1 flex library (.swc).
+Note: the above !FlexStore links include the !FlexBuilder project files. These project files require !FlexBuilder 3 and include the Cairngorm 2.2.1 flex library (.swc).
