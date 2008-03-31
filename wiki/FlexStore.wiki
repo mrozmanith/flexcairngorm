@@ -27,7 +27,7 @@ With these considerations, it is obvious that the !FlexStore is *not* an example
 
 == Solution ==
 
-To remove the above issues, The !FlexStore application desperately needed its components separated into an MVC architecture. Java uses Struts or Swing, ColdFusion uses Mach-ii or Model-Glue. Flex uses the Adobe Cairngorm MVC framework. 
+To remove the above issues, The !FlexStore application desperately needed its components separated into an MVC architecture. Java uses Struts or Swing, !ColdFusion uses Mach-ii or Model-Glue. Flex uses the Adobe Cairngorm MVC framework. 
 
 Below are links to the versions of the !FlexStore with and without Cairngorm MVC. 
 Developers are encouraged to download all versions below and compare the changes between the architectures, components, data structures, and couplings.
