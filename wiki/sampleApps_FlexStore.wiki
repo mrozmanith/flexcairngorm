@@ -31,8 +31,8 @@ The !FlexStore application desperately needed the Cairngorm MVC framework. Below
 Developers will notice that the runtime !UI has not changed at all. Only the code _under the hood_ has changed. Component relationships, use of events, and code partitioning have all been significant improved. Developers are encouraged to download all versions below and compare the changes.
  
 || Version || Download || SVN Link ||
-|| !FlexStore (original) || || ||
-|| !FlexStore (w/ Cairngorm MVC) || || ||
+|| !FlexStore (original) || [http://flexcairngorm.googlecode.com/svn/trunk/docs/samples/flexStoreOriginal.zip download winzip] || ||
+|| !FlexStore (w/ Cairngorm MVC) || [https://flexcairngorm.googlecode.com/svn/trunk/docs/samples/flexStoreWithCairngorm.zip download winzip] || ||
 || !FlexStore (w/ Cairngorm MVC and UM Extensions) || _pending_ || _pending_ ||
 
 Note: the above !FlexStore links include the !FlexBuilder project files. These project files require !FlexBuilder 3 and include the Cairngorm 2.2.1 flex library (.swc).
