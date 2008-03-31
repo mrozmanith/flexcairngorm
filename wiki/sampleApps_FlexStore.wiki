@@ -1,3 +1,4 @@
+#labels Phase-Support,Featured
 =Sample RIA: Adobe Flex Store=
 
 http://flexcairngorm.googlecode.com/svn/trunk/docs/samples/FlexStore.gif
