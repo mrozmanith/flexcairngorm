@@ -1,0 +1,39 @@
+#labels Featured,Phase-Support
+=Sample RIA: Adobe Flex Store=
+
+http://flexcairngorm.googlecode.com/svn/trunk/docs/samples/FlexStore.gif
+
+== Introduction ==
+
+The Macromedia !FlexBuilder 2 installer provided (to the Flex developers) a sample application called the *Flex Store*.
+
+The !FlexStore was provided to the community to demonstrate rich-client application concepts that could be created using tiles, filters, effects, transitions, view states, etc. The !FlexStore provides 3 screens of content: Home, Products, Support. The Products screen dynamically loads an xml catalog file for mobile phones. In the Product screen, users can interactively:
+  * filter which phones are displayed by criteria of cost, features, and other options. 
+  * compare features of 1 or more phones
+  * add/remove phones from the shopping cart
+  * drag 'n drop phones to the compare or shopping cart areas. 
+
+== Issues ==
+
+The !FlexStore is quite amazing in the plethora of features and techniques that it demonstrates in a sample application. 
+
+Unfortunately the !FlexStore suffers from *4 significant* problems:
+  * The code is poor organized and hard to maintain.
+  * Business logic is mixed with view logic and view code.
+  * Access to remote data services is mixed with view code.
+  * View components are not using events properly and are badly _coupled_. 
+
+With these considerations, it becomes obvious that the !FlexStore is *not* an example of code that would be used to create a production or enterprise application. This application (in its original state) would be a _nightmare_ to enhance or reuse. 
+
+== Solution ==
+
+The !FlexStore application desperately needed the Cairngorm MVC framework. Below are links to the modified versions of the !FlexStore. 
+
+Developers will notice that the runtime !UI has not changed at all. Only the code _under the hood_ has changed. Component relationships, use of events, and code partitioning have all been significant improved. Developers are encouraged to download all versions below and compare the changes.
+ 
+|| Version || Download || SVN Link ||
+|| !FlexStore (original) || [http://flexcairngorm.googlecode.com/svn/trunk/docs/samples/flexStoreOriginal.zip download winzip] || ||
+|| !FlexStore (w/ Cairngorm MVC) || [https://flexcairngorm.googlecode.com/svn/trunk/docs/samples/flexStoreWithCairngorm.zip download winzip] || ||
+|| !FlexStore (w/ Cairngorm MVC and UM Extensions) || _pending_ || _pending_ ||
+
+Note: the above !FlexStore links include the !FlexBuilder project files. These project files require !FlexBuilder 3 and include the Cairngorm 2.2.1 flex library (.swc).
