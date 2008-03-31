@@ -5,7 +5,7 @@ http://flexcairngorm.googlecode.com/svn/trunk/docs/samples/FlexStore.gif
 
 == Introduction ==
 
-The !FlexBuilder 2 Installer from Macromedia installed a sample application called the *Flex Store*. The !FlexStore was provided to the community to demonstrate rich-client application concepts that could be created using tiles, filters, effects, transitions, view states, etc. 
+The !FlexBuilder 2 Installer from Macromedia installed a sample application called the *Flex Store*. The !FlexStore was provided to the community to demonstrate rich-client application concepts that offered online by using UI components, filters, effects, transitions, view states, etc. 
 
 The !FlexStore displays 3 screens of content: Home, Products, Support. The Products screen dynamically loads an xml catalog file with data for available mobile phones. In the Product screen (shown above), users can interactively:
   * filter which phones are displayed by criteria of cost, features, and other options. 
