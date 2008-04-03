@@ -1,40 +1,44 @@
 /*
-
-Copyright (c) 2007. Universal Mind, Inc. 
+Copyright (c) 2008, Universal Mind
 All rights reserved.
- 
-This source code is the property of Universal Mind, Inc. ("Universal Mind")
-and is licensed, not sold or assigned, to the Universal Mind customer that
-obtains this code from Universal Mind. 
 
-  * This code may not be disclosed to any party without the prior written 
-    consent of Universal Mind.
-  * This code and may only be used as permitted in the agreement between 
-    Universal Mind and its customer.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-This code contains the valuable trade secrets of Universal Mind, the
-development of which required the expenditure of considerable time and money.
-Unless otherwise expressly set forth in the agreement between Universal
-Mind and its customer, this code is provided "as-is" without warranty of
-any kind.
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the 
+    * documentation and/or other materials provided with the distribution.
+    * Neither the name of the Universal Mind nor the names of its contributors may be used to endorse or promote products derived from 
+    * this software without specific prior written permission.
 
-Author: Thomas Burleson, Principal Architect
-        Darron Schall,   Principal Architect
+THIS SOFTWARE IS PROVIDED BY UNIVERSAL MIND AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Author: Darron Schall, Principal Architect
+		Thomas Burleson, Principal Architect
         ThomasB@UniversalMind.com
+                
 @ignore
 */
+
 package com.universalmind.cairngorm.control
 {
+   import com.adobe.cairngorm.commands.ICommand;
    import com.adobe.cairngorm.control.CairngormEvent;
    import com.adobe.cairngorm.control.CairngormEventDispatcher;
-   import com.adobe.cairngorm.commands.ICommand;
    
    import flash.events.Event;
+   import flash.utils.Dictionary;
    import flash.utils.describeType;
    import flash.utils.getQualifiedClassName;
    
    import mx.core.UIComponent;
    import mx.core.mx_internal;
+   import mx.utils.StringUtil;
 
    /**
      *
@@ -90,15 +94,13 @@ package com.universalmind.cairngorm.control
 	        */
 	      protected function listenForEvent(eventType:String, handler:Function):void {
 	      	 
-	      	 // FIXME: need to cache the eventType and throw console traces if already registered
+	      	 if ((commands[eventType] != null) || (__handlers[eventType] != null)) {
+	      	 	var msg : String = "Warning: Event '{0}' has already been registered with the FrontController";
+	      	 	trace(StringUtil.substitute(msg,[eventType]));
+	      	 }
 	      	 
-	         CairngormEventDispatcher.getInstance().addEventListener(eventType, handler);
-    			 /* 
-    			  * The code below is no longer needed because of the eventHook used instead
-    		      *   
-    		      *   Application.application.addEventListener( eventType, handler);
-    		      *  @Todo - add listener to popupmanager 
-    			  */                  
+	         __dispatcher.addEventListener(eventType, handler);
+	         __handlers[eventType] = handler;
 	      }
 
     		/**
@@ -107,7 +109,7 @@ package com.universalmind.cairngorm.control
     		 * needs separate event dispatching code for Cairngorm events.
     		 * The event is still dispatched normally but ALSO gets sent to the CairngormEventDispatcher
     		 */
-    		[Deprecated("CairngormEvents should now self dispatch. Event hooks or event bubbling should not be used!")]
+    		[Deprecated("CairngormEvents should now self dispatch using event.dispatch(). Event hooks or event bubbling of business events should not be used!")]
     		private static function hookDispatchEvent():Boolean
     		{
     		    use namespace mx_internal;
@@ -126,7 +128,14 @@ package com.universalmind.cairngorm.control
     		{
     		 	if ( event is CairngormEvent)
     		 	{
-    		  		___dispatcher.dispatchEvent( event as CairngormEvent );
+    		 		// Warning: CairngormEvent should be self dispatched for proper redirect to the registered Command
+    		 		//          e.g.
+    		 		//                 var event : LoginUserEvent = new LoginUserEvent(userName, userPassword);
+    		 		//                     event.dispatch();
+    		 		
+    		  		/* Disabled - This has potential side issues
+    		  			__dispatcher.dispatchEvent( event as CairngormEvent );
+    		  		*/
     		  	}
     		}
     
@@ -134,10 +143,11 @@ package com.universalmind.cairngorm.control
       	  * The dispatch event hook when the Application is created. 
       	  * Note: This feature has been disabled! 
       	  **/
-    	  private static var __dispatchEventHooked : Boolean                  = false; // hookDispatchEvent();
+    	  static private var __dispatchEventHooked : Boolean                  = hookDispatchEvent();
     	  
     	  /** Maintain a reference to prevent garbage collection. Also shortcut alias */
-    	  private static var ___dispatcher         : CairngormEventDispatcher = CairngormEventDispatcher.getInstance();
+    	  static private var __dispatcher          : CairngormEventDispatcher = CairngormEventDispatcher.getInstance();
+    	  		 private var __handlers 		   : Dictionary               = new Dictionary();
    }   
 
 }

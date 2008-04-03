@@ -1,30 +1,31 @@
 /*
-
-Copyright (c) 2007. Universal Mind, Inc. 
+Copyright (c) 2008, Universal Mind
 All rights reserved.
- 
-This source code is the property of Universal Mind, Inc. ("Universal Mind")
-and is licensed, not sold or assigned, to the Universal Mind customer that
-obtains this code from Universal Mind. 
 
-  * This code may not be disclosed to any party without the prior written 
-    consent of Universal Mind.
-  * This code and may only be used as permitted in the agreement between 
-    Universal Mind and its customer.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-This code contains the valuable trade secrets of Universal Mind, the
-development of which required the expenditure of considerable time and money.
-Unless otherwise expressly set forth in the agreement between Universal
-Mind and its customer, this code is provided "as-is" without warranty of
-any kind.
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the 
+    * documentation and/or other materials provided with the distribution.
+    * Neither the name of the Universal Mind nor the names of its contributors may be used to endorse or promote products derived from 
+    * this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY UNIVERSAL MIND AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Author: Thomas Burleson, Principal Architect
         ThomasB@UniversalMind.com
+                
 @ignore
 */
 package com.universalmind.cairngorm.events
 {
-	import flash.events.Event;
+    import flash.events.Event;
 	
  /**
     * This interface is similar to the IValueObject interface to 
