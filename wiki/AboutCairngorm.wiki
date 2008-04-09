@@ -1,4 +1,4 @@
-#About Cairngorm
+#About Cairngorm#
 
 Cairngorm is a model-view-controller (MVC) framework which encourages developers to separate "all" business and data persistence logic from their Flex UI/view code. 
 
