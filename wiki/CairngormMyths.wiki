@@ -1,0 +1,26 @@
+#summary Learn about myths and misconceptions of using Cairngorm MVC
+
+= Myths and Misconceptions of Cairngorm MVC =
+
+Cairngorm Misconceptions
+  # Flex already has a framework. I do not need Cairngorm MVC.
+    _Answer_:
+
+  # Cairngorm is Flex only.
+    _Answer_:
+
+  # Why do I need to consider Cairngorm when I can use my own - better - MVC framework. 
+    _Answer_:
+
+  # I have to create so many files. 
+    Cairngorm requires many, many classes: events, commands, delegates.
+    _Answer_:
+
+  # My UI code is polluted with _!CairngormEventDispatcher.getInstance().dispatchEvent()_
+    _Answer_:
+
+  # Why do I have to use Delegates? 
+    _Answer_:
+
+  # I can store all my application data in the !ModelLocator
+    _Answer_:
