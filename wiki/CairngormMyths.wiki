@@ -2,7 +2,6 @@
 
 = Myths and Misconceptions of Cairngorm MVC =
 
-Cairngorm Misconceptions
   1) Flex already has a framework. I do not need Cairngorm MVC.
     _Answer_:
 
