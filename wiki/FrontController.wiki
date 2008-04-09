@@ -1,0 +1,6 @@
+#summary Learn about the Cairngorm extensions for FrontControllers
+
+= Cairngorm Extensions - Controllers =
+
+Details Coming Soon!
+
