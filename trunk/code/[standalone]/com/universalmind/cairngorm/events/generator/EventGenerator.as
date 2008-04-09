@@ -66,13 +66,13 @@ package com.universalmind.cairngorm.events.generator
 			      	
 			  <generator:EventGenerator id="startUpEvents" 										xmlns:generator="com.universalmind.cairngorm.events.generator.*">
 				      <generator:EventGenerator trigger="sequence" result="onUserLoaded(event);" >
-		         		  <events:LoadResourcesEvent 			            					xmlns:events="com.mercer.mercerOnline.control.events.*" />
-						  <events:GetLoggedInUserEvent 											xmlns:events="com.mercer.mercerOnline.control.events.login.*" />
-			  			  <!-- events:LoadClassesOfBusinessEvent                      			xmlns:events="com.mercer.mercerOnline.control.events.questionnaire.*"/ -->
+		         		  <events:LoadResourcesEvent 			            					xmlns:events="com.clientXXX.appXXX.control.events.*" />
+						  <events:GetLoggedInUserEvent 											xmlns:events="com.clientXXX.appXXX.control.events.login.*" />
+			  			  <!-- events:LoadClassesOfBusinessEvent                      			xmlns:events="com.clientXXX.appXXX.control.events.questionnaire.*"/ -->
 				      </generator:EventGenerator>
 			  		  <generator:EventGenerator trigger="parallel">
-			      			<events:LoadRolesForFeaturesEvent               				xmlns:events="com.mercer.mercerOnline.control.events.login.*" />
-					  		<events:LoadAssociatedUsersEvent 	                    		xmlns:events="com.mercer.common.control.events.*" /> 
+			      			<events:LoadRolesForFeaturesEvent               				xmlns:events="com.clientXXX.appXXX.control.events.login.*" />
+					  		<events:LoadAssociatedUsersEvent 	                    		xmlns:events="com.clientXXX.common.control.events.*" /> 
 			  		  </generator:EventGenerator>  			
 			  </generator:EventGenerator>
       
