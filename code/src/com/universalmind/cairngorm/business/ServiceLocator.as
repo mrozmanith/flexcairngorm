@@ -85,6 +85,11 @@ package com.universalmind.cairngorm.business
          * @return the instance of com.universalmind.cairngorm.business.ServiceLocator. 
          * Note: this should be an instantiation of com.universalmind.cairngorm.business.ServiceLocator
          */
+        public static function get instance(): com.adobe.cairngorm.business.ServiceLocator
+        {
+        	return getInstance();
+        }
+        
         public static function getInstance() : com.adobe.cairngorm.business.ServiceLocator 
         {
            if ( __instance == null )
