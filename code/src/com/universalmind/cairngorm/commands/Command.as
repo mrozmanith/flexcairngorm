@@ -32,7 +32,6 @@ package com.universalmind.cairngorm.commands
 	
 	import flash.events.Event;
 	
-	import mx.controls.Alert;
 	import mx.rpc.IResponder;
 	import mx.rpc.events.FaultEvent;
 	
@@ -136,15 +135,18 @@ package com.universalmind.cairngorm.commands
   	    * @see com.universalmind.cairngorm.events.Callbacks
   	    */ 
   		public function notifyCaller(results:* = null):void {
-  			// Default result handler simply forwards 
-  			// the event to the view handler... if available
-  			// Note: the results == FaultEvent or ANY data type
-  			//       this allows data to be directly delivered to the caller without
-  			//       a ResultEvent wrapper
-  			if (__viewHandlers != null) {
-  				if (results is FaultEvent) this.fault(results);
-  				else 					             this.result(results);
-  			}
+  			/*
+  			   Default result handler simply forwards 
+  			   the event to the view handler... if available
+  			   Note: the results == FaultEvent or ANY data type
+  			         this allows data to be directly delivered to the caller without
+  			         a ResultEvent wrapper
+  			         
+  			   !! We forward the handling to this classes fault/result handlers
+  			      not a subclass overrides
+  		 	*/
+  			if (results is FaultEvent) self::fault(results);
+			else 					   self::result(results);
   		}
   		
   	  /** 
@@ -180,9 +182,13 @@ package com.universalmind.cairngorm.commands
         * 
         * @see mx.rpc.IResponder
         */ 	
-  		public function result(info:Object):void {
-  			if (__viewHandlers != null) {
-  				if(__viewHandlers.result  != null)	__viewHandlers.result(info);
+		public function result(info:Object):void {             
+           	notifyCaller(info); 
+        }
+             
+  		self function result(info:Object):void {
+  			if (__viewHandlers && (__viewHandlers.result != null)) {
+  				__viewHandlers.result(info);
   			}
   		}
   	
@@ -195,7 +201,11 @@ package com.universalmind.cairngorm.commands
         * 
         * @see mx.rpc.IResponder
         */ 	
-  		public function fault( info:Object ) : void {
+        public function fault( info:Object ) : void {
+         	notifyCaller(info);
+        }
+  		
+  		self function fault( info:Object ) : void {
   			// Default fault handler simply forwards 
   			// the event to the view handler... if available
   			if (__viewHandlers && (__viewHandlers.fault != null)) __viewHandlers.fault(info);
@@ -255,6 +265,7 @@ package com.universalmind.cairngorm.commands
 			* @private
 			*/ 
 		private var __viewHandlers  : IResponder = null;
+		private namespace self;
 	}
 }	
 
