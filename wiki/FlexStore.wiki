@@ -18,10 +18,11 @@ The !FlexStore is quite amazing in the plethora of features that it demonstrates
 == Issues ==
 
 Unfortunately the original !FlexStore suffers from *4 significant* problems:
-  * The code is poor organized and hard to maintain.
-  * Business logic is mixed with view logic and view code.
+  * The code is poorly organized, hard to understand, and impossible to enhance (as is).
+  * Business logic is mixed with view logic and code.
   * Access to remote data services is mixed with view code.
-  * View components are not using events properly and are badly _coupled_. 
+  * View components are not using events properly.
+  * View components have badly _coupling_ relationships. 
 
 With these considerations, it is obvious that the !FlexStore is *not* an example of code that would be used to create a production or enterprise application. This application (in its original state) would be a _nightmare_ to enhance or reuse. 
 
