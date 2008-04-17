@@ -42,5 +42,5 @@ Note: the above !FlexStore links include the !FlexBuilder project files. These p
 
 Developers will notice that the visual aspects have not changed at all. Only the code _under the hood_ has changed. Component relationships, use of events, and code partitioning have all been significant improved. 
 
-Developers are encouraged to use the directory and file comparison tool [http://www.scootersoftware.com !BeyondCompare] to compare the different versions of the !FlexStore. Comparing the changes will be the primary method that developers can learn about the changes and non-visual enhancements to the !FlexStore.
+Developers are encouraged to use the directory and file comparison tool [http://www.scootersoftware.com BeyondCompare] to compare the different versions of the !FlexStore. Comparing the changes will be the primary method that developers can learn about the changes and non-visual enhancements to the !FlexStore.
  
