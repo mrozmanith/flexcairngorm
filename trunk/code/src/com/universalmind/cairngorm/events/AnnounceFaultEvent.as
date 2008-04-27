@@ -27,8 +27,8 @@ Author: Thomas Burleson, Principal Architect
 package com.universalmind.cairngorm.events
 {
     import flash.events.Event;
-    
     import mx.rpc.Fault;
+    import com.adobe.cairngorm.control.CairngormEvent;
     
    /**
     * The UMEvent class is used to differentiate Cairngorm events 
@@ -51,7 +51,7 @@ package com.universalmind.cairngorm.events
     * @see com.universalmind.cairngorm.controller.CairngormEventDispatcher
     * @see com.universalmind.cairngorm.commands.Command
     */	
-    public class AnnounceFaultEvent extends UMEvent
+    public class AnnounceFaultEvent extends CairngormEvent
     {
         static public const EVENT_ID : String = "announceFaultEvent";
 
@@ -85,14 +85,14 @@ package com.universalmind.cairngorm.events
 			  * 
 			  * @param src The event from which current settings and references should be copied.
 			  */
-			override public function copyFrom(src : Event):Event {					
+			 public function copyFrom(src : Event):Event {					
 				// Note: can change/specify the values of type,bubbles,etc...
 				// during at construction only.
 				
 				// Note the callbacks is copied by REFERENCE 
 				if (src is AnnounceFaultEvent)   this.fault = (src as AnnounceFaultEvent).fault;
 							
-				return super.copyFrom(src);
+				return this;
 			}
 	}
 }
