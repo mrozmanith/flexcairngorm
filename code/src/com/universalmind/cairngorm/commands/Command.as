@@ -28,12 +28,13 @@ package com.universalmind.cairngorm.commands
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.adobe.cairngorm.control.CairngormEventDispatcher;
-	import com.universalmind.cairngorm.events.*;
+	import com.universalmind.cairngorm.events.AnnounceFaultEvent;
 	
 	import flash.events.Event;
 	
 	import mx.rpc.IResponder;
 	import mx.rpc.events.FaultEvent;
+	import com.universalmind.cairngorm.events.generator.EventUtils;
 	
 	
   /**
@@ -42,7 +43,7 @@ package com.universalmind.cairngorm.commands
     * and (d) allows data to be easily cached for calls to delegates or remote services. 
     * 
     * Using the Callbacks class, ANY caller can serve as an Responder without implementing 
-    * the IResponder interface(s). Using the UMEvent class, any such event recieved at the 
+    * the IResponder interface(s). Using the CairngormEvent class, any such event recieved at the 
     * Command instance can contain optional information that will be used later for caller notifications.
     *
     * @example This example demonstrates how the Command class can be subclass and used properly.
@@ -83,7 +84,7 @@ package com.universalmind.cairngorm.commands
     * </listing>
     * 
     * @see com.universalmind.cairngorm.events.Callbacks
-    * @see com.universalmind.cairngorm.events.UMEvent
+    * @see com.adobe.cairngorm.events.CairngormEvent
     */
 	public class Command implements ICommand, IResponder
 	{
@@ -96,7 +97,7 @@ package com.universalmind.cairngorm.commands
 	      */ 
 		public function execute(event:CairngormEvent) : void
 		{	
-			cacheCaller(event as UMEvent);
+			cacheCaller(event);
 		}
 	
 	  /**
@@ -157,16 +158,14 @@ package com.universalmind.cairngorm.commands
   	    * However, manual invocation of this method is also supported.
   	    * </p>
   	    *  
-  	    * @event If the event is an UMEvent subclass, then IResponder handlers [optional] are cached for future use.
+  	    * @event If the event is an CairngormEvent subclass, then IResponder handlers [optional] are cached for future use.
   	    * 
   	    * @see com.universalmind.cairngorm.events.Callbacks
-  	    * @see com.universalmind.cairngorm.events.UMEvent
+  	    * @see com.adobe.cairngorm.events.CairngormEvent
   	    */ 
   		protected function cacheCaller(event:Event):void {
   			// Cache the view result/fault handlers IF any...
-  			if (event && (event is UMEvent)) {
-  				__viewHandlers = (event as UMEvent).callbacks as IResponder;			
-  			}
+  			__viewHandlers = EventUtils.getResponderFor(event);
   		}
 
 		// ----------------------------------------------------------------------------
