@@ -27,9 +27,10 @@ Author: Thomas Burleson, Principal Architect
 package com.universalmind.cairngorm.events.generator
 {
 	import com.universalmind.cairngorm.events.Callbacks;
+	import mx.rpc.IResponder;
 	
 	public interface IEventGenerator
 	{
-		function dispatch(handlers:Callbacks = null) : void;
+		function dispatch(handlers:IResponder = null) : void;
 	}
 }
