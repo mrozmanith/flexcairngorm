@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:flexunit="flexunit.flexui.*"
+	creationComplete="onCreationComplete()">
+	
+	<mx:Script>
+		<![CDATA[
+			import test.universalmind.cairngorm.events.generator.EventGeneratorTest;
+		
+			import flexunit.framework.TestSuite;
+			
+			import com.adobe.cairngorm.commands.ICommand;
+			import com.universalmind.cairngorm.events.Callbacks;
+			
+			import com.universalmind.flexunit.FlexUnitUIFactory;
+			import com.universalmind.flexunit.IFlexUnitUI;
+			
+			/**
+			 * When the application has been created, use the facotry to determine
+			 * which FlexUnit interface to display, and run the tests.
+			 */
+			private function onCreationComplete():void {
+				
+				__testRunner = FlexUnitUIFactory.createUI();
+				addChild( DisplayObject( __testRunner ) )
+				 
+				__testRunner.percentWidth = 100;
+				__testRunner.percentHeight = 100;	
+				
+				__testRunner.setTest( createSuite() );
+				__testRunner.startTest();
+			}
+
+			/**
+			 * Creates a suite of all of the test cases to run.
+			 */
+			private function createSuite():TestSuite {
+				
+				return registerTests(new TestSuite());
+			}
+			
+			
+			private function registerTests(registry:TestSuite):TestSuite {
+				
+				registry.addTestSuite( EventGeneratorTest );				
+				
+				return registry;
+
+			}
+			
+			private var __testRunner:IFlexUnitUI;
+			
+		]]>
+	</mx:Script>
+	
+	
+</mx:Application>
