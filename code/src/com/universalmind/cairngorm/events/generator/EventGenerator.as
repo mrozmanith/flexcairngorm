@@ -40,6 +40,7 @@ package com.universalmind.cairngorm.events.generator
    import flash.events.EventDispatcher;
    import mx.rpc.events.FaultEvent;
    import mx.rpc.Fault;
+   import mx.core.IMXMLObject;
 
 	// *****************************************************
 	// Events broadcast by the generator to outside listeners
@@ -50,7 +51,7 @@ package com.universalmind.cairngorm.events.generator
    
    [DefaultProperty("events")]
    
-   public class EventGenerator extends EventDispatcher implements IEventGenerator
+   public class EventGenerator extends EventDispatcher implements IEventGenerator, IMXMLObject
    {      
        
       /*   
@@ -87,6 +88,7 @@ package com.universalmind.cairngorm.events.generator
       public static const TRIGGER_SEQUENCE : String = "sequence";
       public static const TRIGGER_PARALLEL : String = "parallel";
       
+      public var id             : String            = "";
   	  /**
   	   * Option to specify an alternate dispatcher mechanism  if using the default CairngormEventDispatcher is not desired.
   	   */
@@ -123,6 +125,9 @@ package com.universalmind.cairngorm.events.generator
       	buildCache(eventsToFire);
       }
 	      
+	 public function initialized(document:Object, id:String):void {
+	 	this.id = id;
+	 }	      
       // ****************************************************************
       // Private Methods
       // ****************************************************************
@@ -140,6 +145,7 @@ package com.universalmind.cairngorm.events.generator
 
 			  	if (item is EventGenerator) {
 			  		// may be sequence or parallel event generator
+			  		if (this.dispatcher != null) item.dispatcher = this.dispatcher;
 			  		item.dispatch(new Callbacks(onEventDone,onEventFail));
 			  	} else {
 			  		// So we must have an instance or Class of an UMEvent subclass
@@ -177,7 +183,7 @@ package com.universalmind.cairngorm.events.generator
 	      	}
       	} 
       	
-      	if ((__doneCounter >= __sequence.length) && !announced)  announceDone(response);
+      	if ((__doneCounter >= __sequence.length) && !announced)  announceFail(id,false);
       }
 
       private function onEventDone(response:*):void {
@@ -192,14 +198,16 @@ package com.universalmind.cairngorm.events.generator
       		}
       	}
 
-      	if (__doneCounter >= __sequence.length) announceDone(response);
+      	if (__doneCounter >= __sequence.length) {
+      		announceDone(this.id);
+      	}
 	      		
       }
       
       private function announceDone(response:*=null):void {
   			// Announce event condition to any explicit or implicit (respectively) listeners
   			if (__announcer != null)__announcer.result(response);  				
-  			dispatchEvent(new UMEvent("result",null,false,false,response));
+  			else dispatchEvent(new UMEvent("result",null,false,false,response));
   			
 	      //clearCache();		
       }
