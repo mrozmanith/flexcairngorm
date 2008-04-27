@@ -30,6 +30,7 @@ package com.universalmind.cairngorm.events
     
     import flash.events.Event;
     import com.universalmind.cairngorm.vo.IValueObject;
+    import mx.rpc.IResponder;
     
    /**
     * The UMEvent class is used to differentiate Cairngorm events 
@@ -60,8 +61,12 @@ package com.universalmind.cairngorm.events
 	       * However, it is recommended that specific classes are created for each type
 	       * of event to be dispatched.
 	       */
-	   	  	public var callbacks : Callbacks = null;
+	   	  	public var callbacks : IResponder = null;
 
+			public function get responder():IResponder {
+				return callbacks;
+			}
+			
 	      /**
 	       * Constructor, takes the event name (type), Responder proxy to allow caller to be notified,
 	       * data object (defaults to null), and also defaults the standard Flex event properties bubbles and cancelable
@@ -74,7 +79,7 @@ package com.universalmind.cairngorm.events
 	       * @parma data       This is the optional data object that can be packaged with the event without creating an event subclass
 	       */
 			public function UMEvent(	eventType 	: String 	= "com.universalmind.cairngorm.events.UMEvent", 
-										handlers 	: Callbacks = null, 
+										handlers 	: IResponder = null, 
 										bubbles	 	: Boolean	= true, 
 										cancelable	: Boolean	= false,
 										data		: *         = null) {
@@ -111,8 +116,7 @@ package com.universalmind.cairngorm.events
 							
 				return this;
 			}
-			
-	 
+				 
 		 /**
 		 * This is the recommended method to dipsatch business events directly to the business layer(s).
        * <p><strong>Event hooks or event bubbling solutions are not recommended and have been deprecated</strong></p>
