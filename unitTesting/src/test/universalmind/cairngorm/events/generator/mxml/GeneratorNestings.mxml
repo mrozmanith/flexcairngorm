@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas width="100%" height="100%"
+				xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.universalmind.common.utils.DelayedCall;
+			import mx.rpc.IResponder;
+			import test.universalmind.cairngorm.events.generator.utils.EventResponder;
+			import com.universalmind.cairngorm.events.Callbacks;
+			import com.universalmind.cairngorm.events.UMEvent;
+			
+			public function runTest(dispatcher:* = null):void {
+				if (dispatcher == null) dispatcher = CairngormEventDispatcher.getInstance(); 
+				
+				__expected  = [ "test4", "test5" ]; //"test1", "test2", "test3", "test4", "test5", "test6" ];
+									
+				start(batchAll, dispatcher );
+				
+			}			
+
+			private function onFault(event:*):void {
+				clearBroadcastListener();
+			}
+			
+			/**
+			* Check results of run event batches
+			*/
+			private function onResults_compareExpected( event:* ):void {
+				clearBroadcastListener();
+							
+				assertEquals(__expected.length, __tracker.eventResponses.length );
+				for (var j:int=0; j<__tracker.eventResponses.length; j++) {
+					assertEquals( __expected[j],	__tracker.eventResponses[j] );	
+				}
+			}	
+
+			/** 
+			 * Notify the generator to start dispatching events. This method
+			 * Allow asynchronous nature of FlexUnit to configure before dispatching
+			 * 
+			 * @param generator  Instance of EventGenerator that should be started in 300 ms.
+			 */ 
+			private function start(generator:EventGenerator, listener : Object):void {
+				
+				__tracker.reset();
+				__listener = listener;
+				generator.dispatcher = listener as IEventDispatcher;
+				
+				configureBroadcastListener();
+				
+				DelayedCall.schedule(    function(generator:EventGenerator):void {
+											generator.start();
+										 },
+										 [batchAll],300
+									 );
+			}
+			
+			private function configureBroadcastListener():void {
+				__listener.addEventListener("test1",__tracker.simulateProcessor_Synchronously);
+				__listener.addEventListener("test2",__tracker.simulateProcessor_Synchronously);
+				__listener.addEventListener("test3",__tracker.simulateProcessor_Synchronously);
+	
+				__listener.addEventListener("test4",__tracker.simulateProcessor_Asynchronously);
+				__listener.addEventListener("test5",__tracker.simulateProcessor_Asynchronously);
+				__listener.addEventListener("test6",__tracker.simulateProcessor_Asynchronously);				
+			}
+			
+			private function clearBroadcastListener():void {
+				__listener.removeEventListener("test1",__tracker.simulateProcessor_Asynchronously);
+				__listener.removeEventListener("test2",__tracker.simulateProcessor_Asynchronously);
+				__listener.removeEventListener("test3",__tracker.simulateProcessor_Asynchronously);	
+				__listener.removeEventListener("test4",__tracker.simulateProcessor_Asynchronously);
+				__listener.removeEventListener("test5",__tracker.simulateProcessor_Asynchronously);
+				__listener.removeEventListener("test6",__tracker.simulateProcessor_Asynchronously);				
+
+				__listener.removeEventListener("test1",__tracker.simulateProcessor_Synchronously);
+				__listener.removeEventListener("test2",__tracker.simulateProcessor_Synchronously);
+				__listener.removeEventListener("test3",__tracker.simulateProcessor_Synchronously);	
+				__listener.removeEventListener("test4",__tracker.simulateProcessor_Synchronously);
+				__listener.removeEventListener("test5",__tracker.simulateProcessor_Synchronously);
+				__listener.removeEventListener("test6",__tracker.simulateProcessor_Synchronously);				
+			}
+		
+
+			private function assertEquals(src:*,target:*):void {
+				console.text += "\n" + target;
+			}
+			
+		   
+		   private var __listener  : Object          = null;
+		   private var __tracker   : EventResponder  = new EventResponder();
+		   
+		   private var onEventDone : IResponder = new Callbacks(__tracker.announceEventDone, onFault);
+		   
+		   [Bindable]
+		   private var __events    : Array     = [
+													new UMEvent("test1",onEventDone,false,false,{delay:310}),
+													new UMEvent("test2",onEventDone,false,false,{delay:410}),
+													new UMEvent("test3",onEventDone,false,false,{delay:510}),
+													new UMEvent("test4",onEventDone,false,false,{delay:610}),
+													new UMEvent("test5",onEventDone,false,false,{delay:710}),
+													new UMEvent("test6",onEventDone,false,false,{delay:810})
+												  ];
+												  
+			private var __expected  : Array     = [];
+			
+	
+		]]>
+	</mx:Script>
+
+  <generator:EventGenerator id="batchAll" trigger="parallel" result="onResults_compareExpected(event)" xmlns:generator="com.universalmind.cairngorm.events.generator.*">
+
+  		  <generator:EventGenerator id="batchParallel" events="{[ __events[3],__events[4], __events[5]]}" trigger="parallel"  result="batchSequence.start();" xmlns:generator="com.universalmind.cairngorm.events.generator.*"/>
+	      <generator:EventGenerator id="batchSequence" events="{[__events[2],__events[1], __events[0] ]}" trigger="sequence"  />
+	      	
+  </generator:EventGenerator>
+
+	<mx:TextArea id="console" horizontalCenter="0" verticalCenter="0" width="50%" height="50%"/>
+	
+	
+</mx:Canvas>

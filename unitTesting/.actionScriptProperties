@@ -14,6 +14,7 @@
   </compiler>
   <applications>
     <application path="TestCairngormExtensions.mxml"/>
+    <application path="TestEventGeneratorAsMXML.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

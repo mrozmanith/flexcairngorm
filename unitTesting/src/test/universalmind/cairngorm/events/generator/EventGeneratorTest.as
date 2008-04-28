@@ -12,6 +12,7 @@ package test.universalmind.cairngorm.events.generator
 	import com.universalmind.cairngorm.events.UMEvent;
 	import com.adobe.cairngorm.control.CairngormEventDispatcher;
 	import com.universalmind.common.utils.DelayedCall;
+	import test.universalmind.cairngorm.events.generator.utils.EventResponder;
 
 	
 	public class EventGeneratorTest extends TestCase {
@@ -343,27 +344,8 @@ package test.universalmind.cairngorm.events.generator
 			start(__generator);
 		} 
 		
-		
-		public function testNoUMEvent_A():void {
-			
-			var eventDone : IResponder = new Callbacks(__tracker.announceEventDone, onFault);
-						
-			__ced.addEventListener("test1",__tracker.simulateProcessor_Asynchronously);
-			__ced.addEventListener("test2",__tracker.simulateProcessor_Asynchronously);
-			
-			__expected  = [ "test1", "test2" ];
-			__generator = new EventGenerator( [
-												new UMEvent("test1",eventDone,false,false,{delay:300}),
-												new NoUMEvent("test2",eventDone,{delay:450}),				// test non-UMEvent CairngormEvent subclass with responder
-											  ],
-											  // Add Asynch wrapper for FlexUnit testing...
-											  new Callbacks(addAsync(onResults_compareExpected,1000,null,onFault),onFault),
-											  0, 
-											  EventGenerator.TRIGGER_PARALLEL );
-											  
-			start(__generator);
-		} 
-		
+
+
 		/**
 		 * Events must be 
 		 */
@@ -388,6 +370,27 @@ package test.universalmind.cairngorm.events.generator
 											  
 			start(__generator);
 		} 
+		
+		public function testNoUMEvent_A():void {
+			
+			var eventDone : IResponder = new Callbacks(__tracker.announceEventDone, onFault);
+						
+			__ced.addEventListener("test1",__tracker.simulateProcessor_Asynchronously);
+			__ced.addEventListener("test2",__tracker.simulateProcessor_Asynchronously);
+			
+			__expected  = [ "test1", "test2" ];
+			__generator = new EventGenerator( [
+												new UMEvent("test1",eventDone,false,false,{delay:300}),
+												new NoUMEvent("test2",eventDone,{delay:450}),				// test non-UMEvent CairngormEvent subclass with responder
+											  ],
+											  // Add Asynch wrapper for FlexUnit testing...
+											  new Callbacks(addAsync(onResults_compareExpected,1000,null,onFault),onFault),
+											  0, 
+											  EventGenerator.TRIGGER_PARALLEL );
+											  
+			start(__generator);
+		} 
+		
 		
 		 
 		
@@ -452,63 +455,9 @@ package test.universalmind.cairngorm.events.generator
 	}
 }
 
+	import mx.rpc.IResponder;
+	import com.adobe.cairngorm.control.CairngormEvent;
 
-import mx.rpc.IResponder;
-import flash.events.Event;
-import com.universalmind.common.utils.DelayedCall;
-import com.universalmind.cairngorm.events.UMEvent;
-import com.adobe.cairngorm.control.CairngormEvent;
-import com.universalmind.cairngorm.events.generator.EventUtils;
-class EventResponder {
-
-	public var delay          : int   = 1800;	
-	public var eventResponses : Array = [];
-	
-	public function reset():void {
-		delay          = 1800;
-		eventResponses = [];
-	}
-	// *************************************************
-	// Public Event Handlers
-	// *************************************************
-	
-	public function simulateProcessor_Asynchronously(event:Event):void {
-		var handlers : IResponder = EventUtils.getResponderFor(event);
-		if (event is UMEvent) {
-			var data : Object = (event as UMEvent).data;
-			delay = (data != null) ? data.delay : 300;
-		}
-
-		DelayedCall.schedule(function (responder:IResponder,eventID:String):void {
-								
-								notifyResponder(responder,eventID);
-								
-							 },[handlers,event.type],delay);				
-	}
-			
-	public function simulateProcessor_Synchronously(event:Event):void {
-	    var responder : IResponder = EventUtils.getResponderFor(event);
-	    if (responder != null) responder.result(event.type);
-	}
-
-
-	/**
-	 * When the event is done, let's do something to track completion...
-	 * needed for testing
-	 */
-	public function announceEventDone(info:*):void {
-		eventResponses.push(String(info));
-	}
-
-	// *************************************************
-	// Private utility methods
-	// *************************************************
-	
-	private function notifyResponder(responder:IResponder,eventID:String):void {
-		if (responder != null) responder.result(eventID);
-		else throw new Error("Responder not available for Event: " +eventID);
-	}
-}
 
 class NoUMEvent extends CairngormEvent {
 	
