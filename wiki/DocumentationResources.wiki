@@ -8,4 +8,4 @@ Below is a list of documentation resources for the !UniversalMind Cairngorm exte
 
   * [http://flexcairngorm.googlecode.com/svn/trunk/docs/EventBubbling%20&%20Cairngorm.pdf Event Dispatching & Cairngorm]
   * [http://flexcairngorm.googlecode.com/svn/trunk/docs/FlexCairngorm%20Continuous%20Testing.pdf Cairngorm & Continuous Testing]
-* [https://flexcairngorm.googlecode.com/svn/trunk/docs/Effectively Using Cairngorm Extensions.pdf Effectively using the Cairngorm Extensions]
+  * [https://flexcairngorm.googlecode.com/svn/trunk/docs/Effectively Using Cairngorm Extensions.pdf Effectively using the Cairngorm Extensions]
