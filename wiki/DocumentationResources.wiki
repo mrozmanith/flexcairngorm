@@ -13,7 +13,8 @@ Below is a list of documentation resources for the !UniversalMind Cairngorm exte
 
 Sample Applications
 ----
+
   * [http://code.google.com/p/flexcairngorm/source/browse/trunk/docs/samples/CafeTownsend_CGX.zip CafeTownsend]
-  * [http://code.google.com/p/flexcairngorm/source/browse/trunk/docs/samples/flexStore_CGX.zip FlexStore (Phone Catalog)]
+  * [http://flexcairngorm.googlecode.com/svn/trunk/docs/samples/flexStore_CGX.zip FlexStore (Phone Catalog)]
 
 These samples are also available within the SVN Repository at [http://code.google.com/p/flexcairngorm/source/browse/#svn/trunk/docs/samples%3Fstate%3Dclosed Browse SVN Samples]
