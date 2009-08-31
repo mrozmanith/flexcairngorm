@@ -232,7 +232,9 @@ package com.universalmind.cairngorm.business
 		 *
 		 * @throws Error Announces that the service instance has not been initialized properly. 
 		 */
-		public function prepareHandlers(token:AsyncToken=null,handlers:Callbacks =null):void {
+		public function prepareHandlers(token:AsyncToken=null,handlers:IResponder =null):void {
+			
+			
 			// Normally we have 1 call per service so the default handler implementation works
 			// but if we have multiple call options, how do we assign different handlers to
 			// different calls? .... alternateHandlers...
@@ -331,13 +333,13 @@ package com.universalmind.cairngorm.business
 		// Private utility methods
 		// *********************** ********************************
 
-		private function getResultHandler(delegateHandlers:Callbacks =null):Function {
+		private function getResultHandler(delegateHandlers:IResponder =null):Function {
 				// Did the Delegate subclass have specific methods that should handler the results 1st?
 				// This 1st handler is where the factories could convert the incoming data...
 			return makeMethodClosure("onResult", delegateHandlers );
 		}
 		
-		private function getFaultHandler(delegateHandlers:Callbacks =null):Function {
+		private function getFaultHandler(delegateHandlers:IResponder =null):Function {
 				// Did the Delegate subclass have specific methods that should handler the results 1st?
 				// This 1st handler is where the factories could convert the incoming data...
 			return makeMethodClosure("onFault",delegateHandlers );
@@ -383,8 +385,8 @@ package com.universalmind.cairngorm.business
 		// Private Attributes
 		// *********************** ********************************
 
-		private var __service  		: *;
-		private var __serviceName 	: String; 
-		private var __responder		: IResponder;
+		protected var __service  		: *;
+		protected var __serviceName 	: String; 
+		protected var __responder		: IResponder;
 	}
 }
