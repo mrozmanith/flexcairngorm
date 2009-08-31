@@ -119,7 +119,7 @@ package com.universalmind.cairngorm.control
         * @subController This is an instance of a class that "should be" a sub-Controller
         */
   	  private function checkModuleType(subController:*):Boolean {
-       		if (subController is ModuleController) return false;
+       		if (subController is ModuleController) return true;
        		else {
        			var msg : String = "SubControllers must be subclasses of ModuleController.";
        			throw new Error( msg );	
