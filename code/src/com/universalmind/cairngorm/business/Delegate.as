@@ -238,7 +238,7 @@ package com.universalmind.cairngorm.business
 			// Normally we have 1 call per service so the default handler implementation works
 			// but if we have multiple call options, how do we assign different handlers to
 			// different calls? .... alternateHandlers...
-			if (token.message == null) {
+			if (token == null || token.message == null) {
 				var ws        : WebService = (this.service as WebService);
 				if ((ws && !ws.canLoadWSDL()) || (ws == null)) {
 					var msg       : String = "The Service for Delegate '{0}' has not been initialized properly.";
