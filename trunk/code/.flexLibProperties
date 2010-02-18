@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" version="1">
+  <includeClasses>
+    <classEntry path="com.adobe.ac.Observe"/>
+    <classEntry path="com.adobe.ac.ObserveValue"/>
+    <classEntry path="com.adobe.ac.Observer"/>
+    <classEntry path="com.adobe.ac.SmartObserve"/>
+    <classEntry path="com.adobe.cairngorm.CairngormError"/>
+    <classEntry path="com.adobe.cairngorm.CairngormMessageCodes"/>
+    <classEntry path="com.adobe.cairngorm.business.AbstractServices"/>
+    <classEntry path="com.adobe.cairngorm.business.HTTPServices"/>
+    <classEntry path="com.adobe.cairngorm.business.IServiceLocator"/>
+    <classEntry path="com.adobe.cairngorm.business.IServices"/>
+    <classEntry path="com.adobe.cairngorm.business.RemoteObjects"/>
+    <classEntry path="com.adobe.cairngorm.business.Responder"/>
+    <classEntry path="com.adobe.cairngorm.business.ServiceLocator"/>
+    <classEntry path="com.adobe.cairngorm.business.WebServices"/>
+    <classEntry path="com.adobe.cairngorm.commands.Command"/>
+    <classEntry path="com.adobe.cairngorm.commands.ICommand"/>
+    <classEntry path="com.adobe.cairngorm.commands.SequenceCommand"/>
+    <classEntry path="com.adobe.cairngorm.control.CairngormEvent"/>
+    <classEntry path="com.adobe.cairngorm.control.CairngormEventDispatcher"/>
+    <classEntry path="com.adobe.cairngorm.control.FrontController"/>
+    <classEntry path="com.adobe.cairngorm.model.IModelLocator"/>
+    <classEntry path="com.adobe.cairngorm.model.ModelLocator"/>
+    <classEntry path="com.adobe.cairngorm.vo.IValueObject"/>
+    <classEntry path="com.adobe.cairngorm.vo.ValueObject"/>
+    <classEntry path="com.universalmind.cairngorm.business.Delegate"/>
+    <classEntry path="com.universalmind.cairngorm.business.ServiceLocator"/>
+    <classEntry path="com.universalmind.cairngorm.commands.Command"/>
+    <classEntry path="com.universalmind.cairngorm.control.BaseController"/>
+    <classEntry path="com.universalmind.cairngorm.control.FrontController"/>
+    <classEntry path="com.universalmind.cairngorm.control.ModuleController"/>
+    <classEntry path="com.universalmind.cairngorm.events.AnnounceFaultEvent"/>
+    <classEntry path="com.universalmind.cairngorm.events.Callbacks"/>
+    <classEntry path="com.universalmind.cairngorm.events.IUMEvent"/>
+    <classEntry path="com.universalmind.cairngorm.events.UMEvent"/>
+    <classEntry path="com.universalmind.cairngorm.events.generator.EventGenerator"/>
+    <classEntry path="com.universalmind.cairngorm.events.generator.EventUtils"/>
+    <classEntry path="com.universalmind.cairngorm.events.generator.IEventGenerator"/>
+    <classEntry path="com.universalmind.cairngorm.vo.ConnectionVO"/>
+    <classEntry path="com.universalmind.cairngorm.vo.IValueObject"/>
+  </includeClasses>
+  <includeResources>
+    <resourceEntry destPath="locale/en_US/CairngormMessages.properties" sourcePath="locale/en_US/CairngormMessages.properties"/>
+    <resourceEntry destPath="cairngorm-manifest.xml" sourcePath="cairngorm-manifest.xml"/>
+  </includeResources>
+  <namespaceManifests>
+    <namespaceManifestEntry manifest="cairngorm-manifest.xml" namespace="http://www.adobe.com/2006/cairngorm"/>
+  </namespaceManifests>
+</flexLibProperties>
