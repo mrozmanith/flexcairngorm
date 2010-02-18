@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<componentPackage>
+
+	<component id="FrontController" class="com.universalmind.cairngorm.control.FrontController" />
+	<component id="ServiceLocator" 	class="com.adobe.cairngorm.business.ServiceLocator"/>
+	<component id="EventGenerator" 	class="com.universalmind.cairngorm.events.generator.EventGenerator" />
+	<component id="SmartObserve"   	class="com.adobe.ac.SmartObserve" />
+
+</componentPackage>
