@@ -10,6 +10,10 @@ Below is a list of documentation resources for the !UniversalMind Cairngorm exte
   * [http://flexcairngorm.googlecode.com/svn/trunk/docs/FlexCairngorm%20Continuous%20Testing.pdf Cairngorm & Continuous Testing]
   * [http://flexcairngorm.googlecode.com/svn/trunk/docs/Effectively%20Using%20Cairngorm%20Extensions.pdf Effectively using the Cairngorm Extensions]
 
+Direct Downloads
+----
+  * [http://flexcairngorm.googlecode.com/svn/trunk/downloads/fb4_projectAndSrc.zip FlashBuilder Project (full source and project settings)]
+  * [http://flexcairngorm.googlecode.com/svn/trunk/downloads/CairngormExtensions.swc CGX Library (*.swc)]
 
 Sample Applications
 ----
