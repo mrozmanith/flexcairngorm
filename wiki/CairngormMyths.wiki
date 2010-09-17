@@ -13,7 +13,7 @@
 
   4) I have to create so many files. 
     Cairngorm requires many, many classes: events, commands, delegates.
-    _Answer_:
+    _Answer_: Cairngorm wants a FrontController (to map events to commands), business events, and commands. Delegates are optional. What is important, however, is too realize that you DO NOT need a distinct command class for each business event. That is RIDICULOUS and creates huge quantity of files. Create Command classes to handle classes/groups of related events. So LogInEvent, LogOutEvent, RefreshSessionEvent would be handled by the AuthenticationCommand, etc. In the AuthenticationCommand::execute() do a switch off the event.type to call a protected or private method.
 
   5) My UI code is polluted with _!CairngormEventDispatcher.getInstance().dispatchEvent()_
     _Answer_:
